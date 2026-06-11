@@ -113,10 +113,10 @@ export default function PricingSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="bg-brand-white border border-brand-border-gray/30 rounded-[32px] p-6 sm:p-10 shadow-sm flex flex-col text-left relative overflow-hidden"
+            className="bg-brand-white border border-brand-border-gray/30 rounded-[32px] p-5 sm:p-10 shadow-sm flex flex-col text-left relative overflow-hidden"
           >
             {/* Plan Meta */}
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               <h3 className="text-2xl sm:text-3xl font-medium text-brand-black mb-1">
                 {activePlan.title}
               </h3>
@@ -126,16 +126,16 @@ export default function PricingSection() {
             </div>
 
             {/* Highlight Box */}
-            <div className="bg-brand-bg-gray/50 border border-brand-border-gray/20 rounded-2xl p-4 mb-8">
+            <div className="bg-brand-bg-gray/50 border border-brand-border-gray/20 rounded-2xl p-4 mb-6 sm:mb-8">
               <p className="text-brand-black text-xs sm:text-sm font-medium leading-relaxed">
                 {activePlan.highlight}
               </p>
             </div>
 
             {/* Features List */}
-            <ul className="flex flex-col gap-4 mb-10 border-t border-brand-border-gray/20 pt-6">
+            <ul className="flex flex-col gap-2.5 sm:gap-4 mb-6 sm:mb-10 border-t border-brand-border-gray/20 pt-4 sm:pt-6">
               {activePlan.features.map((feature, i) => (
-                <li key={i} className="flex items-center gap-3 text-brand-black text-xs sm:text-sm font-semibold border-b border-brand-border-gray/10 pb-3 last:border-0 last:pb-0">
+                <li key={i} className="flex items-center gap-2.5 sm:gap-3 text-brand-black text-xs sm:text-sm font-semibold border-b border-brand-border-gray/10 pb-2.5 sm:pb-3 last:border-0 last:pb-0">
                   <div className="w-5 h-5 rounded-full bg-brand-bg-gray flex items-center justify-center text-brand-black flex-shrink-0">
                     <Check className="w-3 h-3 stroke-[2.5]" />
                   </div>
@@ -145,7 +145,7 @@ export default function PricingSection() {
             </ul>
 
             {/* Price & Action Row */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-t border-brand-border-gray/20 pt-6 mt-auto">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 border-t border-brand-border-gray/20 pt-4 sm:pt-6 mt-auto">
               <div>
                 <span className="text-3xl sm:text-4xl font-medium text-brand-black tracking-tight">
                   {activePlan.price}

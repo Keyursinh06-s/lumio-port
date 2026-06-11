@@ -92,7 +92,7 @@ export default function HeroSection() {
         {/* Top Status & Social Row */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center gap-4 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full border border-black/5 shadow-sm mb-8"
+          className="flex flex-col sm:flex-row items-center gap-4 bg-white/40 backdrop-blur-sm px-5 py-4 sm:px-6 sm:py-3 rounded-[24px] sm:rounded-full border border-black/5 shadow-sm mb-8 w-auto max-w-[90vw] sm:max-w-none"
         >
           {/* Avatar & Name */}
           <div className="flex items-center gap-3">

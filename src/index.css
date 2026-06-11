@@ -123,6 +123,10 @@
 @font-face { font-family: "Inter Placeholder"; src: local("Arial"); ascent-override: 89.79%; descent-override: 22.36%; line-gap-override: 0.00%; size-adjust: 107.89% }
 
 @layer base {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
   body {
     background-color: #ebeced;
     color: #000000;
@@ -131,7 +135,6 @@
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
   }
 
   ::selection {
@@ -623,13 +626,21 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
 
 /* Navbar Premium Button Responsive Sizes */
 .nav-premium-btn {
-  width: 120px !important;
+  width: 90px !important;
   height: 42px !important;
+}
+.nav-premium-btn .text-primary,
+.nav-premium-btn .text-secondary {
+  font-size: 13px !important;
 }
 @media (min-width: 640px) {
   .nav-premium-btn {
     width: 180px !important;
     height: 48px !important;
+  }
+  .nav-premium-btn .text-primary,
+  .nav-premium-btn .text-secondary {
+    font-size: 16px !important;
   }
 }
 

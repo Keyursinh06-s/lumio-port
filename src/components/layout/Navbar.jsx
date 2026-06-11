@@ -27,7 +27,7 @@ function DockIcon({ mouseX, onClick, label, children }) {
       ref={ref}
       onClick={onClick}
       style={{ scale, transformOrigin: 'center bottom' }}
-      className="p-1.5 sm:p-2.5 rounded-full bg-transparent border-0 outline-none hover:bg-black/5 text-black/60 hover:text-black transition-colors duration-200 relative group flex items-center justify-center origin-bottom"
+      className="p-1 sm:p-2.5 rounded-full bg-transparent border-0 outline-none hover:bg-black/5 text-black/60 hover:text-black transition-colors duration-200 relative group flex items-center justify-center origin-bottom"
       aria-label={label}
     >
       {children}
@@ -66,9 +66,9 @@ export default function Navbar({ currentPath, onNavigate }) {
     <nav 
       onMouseMove={(e) => mouseX.set(e.clientX)}
       onMouseLeave={() => mouseX.set(Infinity)}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-dock border border-black/5 rounded-full px-2 sm:px-4 py-2 shadow-2xl flex items-center gap-1 sm:gap-2 max-w-[95vw] md:max-w-2xl h-[58px] sm:h-[64px] overflow-visible"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-dock border border-black/5 rounded-full px-1.5 sm:px-4 py-2 shadow-2xl flex items-center gap-0.5 sm:gap-2 max-w-[95vw] md:max-w-2xl h-[58px] sm:h-[64px] overflow-visible"
     >
-      <div className="flex items-center gap-1 sm:gap-2 pr-1 sm:pr-2 border-r border-black/10 h-full overflow-visible">
+      <div className="flex items-center gap-0.5 sm:gap-2 pr-0.5 sm:pr-2 border-r border-black/10 h-full overflow-visible">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (

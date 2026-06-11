@@ -1,8 +1,16 @@
-import React, { useState, useId } from 'react';
+import React, { useState, useId, useRef, useEffect } from 'react';
+import { useInView } from 'framer-motion';
 
 export default function FolderCard({ title, images = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const id = useId();
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: false, margin: "-35% 0px -35% 0px" });
+
+  useEffect(() => {
+    setIsOpen(inView);
+  }, [inView]);
+
   const backGradId = `backGrad${id}`;
   const frontGradId = `frontGrad${id}`;
 
@@ -10,7 +18,7 @@ export default function FolderCard({ title, images = [] }) {
   const rootClass = `folder-root${isOpen ? ' open' : ''}`;
 
   return (
-    <div className="folder-wrapper">
+    <div className="folder-wrapper" ref={ref}>
       <div
         className={rootClass}
         onMouseEnter={() => setIsOpen(true)}
