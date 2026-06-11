@@ -92,33 +92,33 @@ export default function HeroSection() {
         {/* Top Status & Social Row */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center gap-4 bg-white/40 backdrop-blur-sm px-5 py-4 sm:px-6 sm:py-3 rounded-[24px] sm:rounded-full border border-black/5 shadow-sm mb-8 w-auto max-w-[90vw] sm:max-w-none"
+          className="flex flex-row items-center gap-2.5 sm:gap-4 bg-white/40 backdrop-blur-sm px-3.5 py-2 sm:px-6 sm:py-3 rounded-full border border-black/5 shadow-sm mb-8 w-auto max-w-[95vw] sm:max-w-none"
         >
           {/* Avatar & Name */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <img
               src="/logo.png"
               alt="lumio logo"
-              className="h-6 w-auto object-contain"
+              className="h-5 sm:h-6 w-auto object-contain"
             />
             <div className="text-left">
-              <h3 className="font-semibold text-brand-black text-sm">Keyursinh</h3>
-              <p className="text-[11px] text-brand-gray">Web Designer, developer</p>
+              <h3 className="font-semibold text-brand-black text-xs sm:text-sm">Keyursinh</h3>
+              <p className="text-[9px] sm:text-[11px] text-brand-gray">Web Designer, developer</p>
             </div>
           </div>
           
-          <div className="hidden sm:block h-6 w-px bg-black/10" />
+          <div className="h-4 sm:h-6 w-px bg-black/10" />
           
           {/* Availability Status */}
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-xs font-semibold text-brand-black">3 Open slots</span>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-[10px] sm:text-xs font-semibold text-brand-black">3 Open slots</span>
           </div>
 
           <div className="hidden sm:block h-6 w-px bg-black/10" />
 
-          {/* Social Icons */}
-          <div className="flex items-center gap-2">
+          {/* Social Icons (Desktop only) */}
+          <div className="hidden sm:flex items-center gap-2">
             {socialLinks.map((social, index) => {
               const Icon = social.icon;
               return (
