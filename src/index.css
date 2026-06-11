@@ -1,0 +1,635 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Typography from Framer Font CSS */
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Host Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/hostgrotesk/v5/co3UmWBnlCJ3U42vbbfdwMjzqHAXOdFzqU5PuTnJ_h-j-w94.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Host Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/hostgrotesk/v5/co3UmWBnlCJ3U42vbbfdwMjzqHAXOdFzqU5PuTnJ_hGj-w.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/5vvr9Vy74if2I6bQbJvbw7SY1pQ.woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/EOr0mi4hNtlgWNn9if640EZzXCo.woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116 }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/Y9k9QrlZAqio88Klkmbd8VoMQc.woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+1F00-1FFF }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/OYrD2tBIBPvoJXiIHnLoOXnY9M.woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0370-03FF }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/JeYwfuaPfZHQhEG8U5gtPDZ7WQ.woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2070, U+2074-207E, U+2080-208E, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/b6Y37FthZeALduNqHicBT6FutY.woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/vQyevYAyHtARFwPqUzQGpnDs.woff2"); font-display: swap; font-style: normal; font-weight: 400; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/5A3Ce6C9YYmCjpQx9M4inSaKU.woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/Qx95Xyt0Ka3SGhinnbXIGpEIyP4.woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116 }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/6mJuEAguuIuMog10gGvH5d3cl8.woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+1F00-1FFF }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/xYYWaj7wCU5zSQH0eXvSaS19wo.woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0370-03FF }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/otTaNuNpVK4RbdlT7zDDdKvQBA.woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/d3tHnaQIAeqiE5hGcRw4mmgWYU.woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD }
+@font-face { font-family: "Inter"; src: url("https://framerusercontent.com/assets/DolVirEGb34pEXEp8t8FQBSK4.woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB }
+@font-face { font-family: "Geist Placeholder"; src: local("Arial"); ascent-override: 94.47%; descent-override: 27.73%; line-gap-override: 0.00%; size-adjust: 106.39% }
+@font-face { font-family: "Host Grotesk Placeholder"; src: local("Arial"); ascent-override: 95.95%; descent-override: 29.78%; line-gap-override: 0.00%; size-adjust: 105.78% }
+@font-face { font-family: "Inter Placeholder"; src: local("Arial"); ascent-override: 89.79%; descent-override: 22.36%; line-gap-override: 0.00%; size-adjust: 107.89% }
+
+@layer base {
+  body {
+    background-color: #ebeced;
+    color: #000000;
+    font-family: Geist, Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #000000;
+    color: #ffffff;
+  }
+}
+
+/* Custom utilities */
+.backdrop-blur-dock {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Custom scroll reveal initial states */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Infinite marquee styles */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Hero mockup marquee */
+@keyframes hero-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-hero-marquee {
+  display: flex;
+  width: max-content;
+  animation: hero-marquee 30s linear infinite;
+}
+
+.animate-hero-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.morph-btn{
+    position:relative;
+
+    width: 100%;
+    max-width: 285px;
+    height:70px;
+
+    border:none;
+    outline:none;
+    cursor:pointer;
+
+    overflow:hidden;
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #101010 0%,
+        #171717 45%,
+        #252525 100%
+    );
+
+    color:#fff;
+
+    box-shadow:
+    0 18px 45px rgba(0,0,0,.22),
+    0 8px 18px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+    transition:
+    transform .45s cubic-bezier(.22,1,.36,1),
+    box-shadow .45s cubic-bezier(.22,1,.36,1);
+
+    --mouse-x:50%;
+    --mouse-y:50%;
+}
+
+.morph-btn:hover{
+    transform:translateY(-2px) scale(1.02);
+
+    box-shadow:
+    0 24px 55px rgba(0,0,0,.28),
+    0 12px 25px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.morph-btn:active{
+    transform:scale(.98);
+}
+
+/* =========================
+   CURSOR GLOW
+========================= */
+
+.morph-btn::after{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle at var(--mouse-x) var(--mouse-y),
+        rgba(255,255,255,.14),
+        transparent 35%
+    );
+
+    opacity:0;
+    transition:opacity .35s ease;
+
+    pointer-events:none;
+}
+
+.morph-btn:hover::after{
+    opacity:1;
+}
+
+/* =========================
+   SHINE EFFECT
+========================= */
+
+.morph-btn::before{
+    content:"";
+
+    position:absolute;
+
+    top:-250%;
+    left:-90%;
+
+    width:40%;
+    height:500%;
+
+    transform:rotate(22deg);
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.18),
+        rgba(255,255,255,.25),
+        transparent
+    );
+
+    transition:left .95s cubic-bezier(.22,1,.36,1);
+
+    pointer-events:none;
+}
+
+.morph-btn:hover::before{
+    left:180%;
+}
+
+/* =========================
+   TEXT WRAPPER
+========================= */
+
+.text-wrap{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+/* =========================
+   FONT SETTINGS
+   Geist 500
+   16px / 16px
+========================= */
+
+.text-primary,
+.text-secondary{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-family:Geist,"Geist Placeholder",sans-serif;
+    font-weight:500;
+    font-size:16px;
+    line-height:16px;
+    color:rgb(255,255,255);
+
+    white-space:nowrap;
+
+    letter-spacing:-0.03em;
+
+    transition:
+    opacity .45s cubic-bezier(.22,1,.36,1),
+    transform .45s cubic-bezier(.22,1,.36,1),
+    filter .45s cubic-bezier(.22,1,.36,1);
+}
+
+/* =========================
+   INITIAL STATE
+========================= */
+
+.text-primary{
+    opacity:1;
+    transform:translateY(0);
+    filter:blur(0);
+}
+
+.text-secondary{
+    opacity:0;
+    transform:translateY(18px);
+    filter:blur(8px);
+}
+
+/* =========================
+   HOVER MORPH
+========================= */
+
+.morph-btn:hover .text-primary{
+    opacity:0;
+    transform:translateY(-18px);
+    filter:blur(8px);
+}
+
+.morph-btn:hover .text-secondary{
+    opacity:1;
+    transform:translateY(0);
+    filter:blur(0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:600px){
+
+    .morph-btn{
+        width: 100%;
+        max-width: 260px;
+        height:66px;
+    }
+
+    .text-primary,
+    .text-secondary{
+        font-size:15px;
+        line-height:15px;
+    }
+}
+
+/* =========================
+   FOLDER CARD (SERVICES) — New SVG-based design
+================================================== */
+
+.folder-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 20px 10px;
+}
+
+.folder-root {
+  position: relative;
+  width: 180px;
+  height: 200px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  overflow: visible;
+}
+
+/* ---- CARDS CONTAINER ---- */
+.cards {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  width: 160px;
+  height: 130px;
+  transform: translateX(-50%);
+  z-index: 4;
+}
+
+.folder-root .card {
+  position: absolute;
+  overflow: hidden;
+  bottom: 0;
+  left: 50%;
+  opacity: 1;
+  background: #141414; /* solid device bezel */
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.3),
+    0 6px 14px rgba(0,0,0,0.2);
+  transition: transform 0.55s cubic-bezier(0.34, 1.3, 0.64, 1), opacity 0.3s ease, box-shadow 0.4s ease;
+}
+
+/* ---- Card image fill ---- */
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Card noise texture overlay ---- */
+.folder-root .card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px,
+    transparent 2px, transparent 12px
+  );
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---- Horizontal Cards (Website, Framer, etc.) ---- */
+.card-horizontal {
+  width: 124px;
+  height: 84px;
+  border-radius: 8px;
+  border: 3px solid #141414;
+}
+.card-horizontal.card-1 {
+  z-index: 3;
+  transition-delay: 0.04s;
+  transform: translateX(-50%) rotate(0deg) translateY(86px);
+}
+.card-horizontal.card-2 {
+  z-index: 2;
+  transition-delay: 0s;
+  transform: translateX(-50%) rotate(6deg) translateY(86px);
+}
+.card-horizontal.card-3 {
+  z-index: 1;
+  transition-delay: 0.02s;
+  transform: translateX(-50%) rotate(-6deg) translateY(86px);
+}
+
+/* Horizontal open (fan) positions - tighter layout to avoid blank space */
+.folder-root.open .card-horizontal.card-1 {
+  transform: translateX(calc(-50% + 46px)) rotate(14deg) translateY(56px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 12px 24px rgba(0,0,0,0.25);
+}
+.folder-root.open .card-horizontal.card-2 {
+  transform: translateX(-50%) rotate(0deg) translateY(36px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4), 0 16px 32px rgba(0,0,0,0.3);
+}
+.folder-root.open .card-horizontal.card-3 {
+  transform: translateX(calc(-50% - 46px)) rotate(-14deg) translateY(56px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 12px 24px rgba(0,0,0,0.25);
+}
+
+/* ---- Vertical Cards (App Design) ---- */
+.card-vertical {
+  width: 66px;
+  height: 108px;
+  border-radius: 11px;
+  border: 4px solid #141414;
+}
+.card-vertical.card-1 {
+  z-index: 2; /* right behind center */
+  transition-delay: 0.04s;
+  transform: translateX(-50%) rotate(0deg) translateY(112px);
+}
+.card-vertical.card-2 {
+  z-index: 3; /* center on top */
+  transition-delay: 0s;
+  transform: translateX(-50%) rotate(4deg) translateY(112px);
+}
+.card-vertical.card-3 {
+  z-index: 1; /* left behind center */
+  transition-delay: 0.02s;
+  transform: translateX(-50%) rotate(-4deg) translateY(112px);
+}
+
+/* Vertical open (fan) positions - tighter layout to avoid blank space */
+.folder-root.open .card-vertical.card-1 {
+  transform: translateX(calc(-50% + 32px)) rotate(12deg) translateY(48px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 12px 24px rgba(0,0,0,0.25);
+}
+.folder-root.open .card-vertical.card-2 {
+  transform: translateX(-50%) rotate(0deg) translateY(28px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4), 0 16px 32px rgba(0,0,0,0.3);
+}
+.folder-root.open .card-vertical.card-3 {
+  transform: translateX(calc(-50% - 32px)) rotate(-12deg) translateY(48px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 12px 24px rgba(0,0,0,0.25);
+}
+
+/* ---- FOLDER SVG panels ---- */
+.folder-back {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 180px;
+  z-index: 3;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
+}
+.folder-front {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 180px; height: 120px;
+  z-index: 5;
+  transform-origin: 50% 100%;
+  transform: perspective(2500px) rotateX(0deg);
+  transition: transform 0.5s cubic-bezier(0.34, 1.1, 0.64, 1);
+  overflow: hidden;
+  border-radius: 12px;
+}
+.folder-root.open .folder-front {
+  transform: perspective(2500px) rotateX(-65deg);
+}
+
+/* ---- Folder front and back shine sweep ---- */
+.folder-front::before,
+.folder-back-wrap::before {
+  content: "";
+  position: absolute;
+  top: -250%;
+  left: -90%;
+  width: 40%;
+  height: 500%;
+  transform: rotate(22deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    rgba(255,255,255,0.35),
+    transparent
+  );
+  transition: left 0.95s cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+  z-index: 12;
+}
+
+.folder-root.open .folder-front::before,
+.folder-root.open .folder-back-wrap::before {
+  left: 180%;
+}
+
+.folder-back-wrap { position: relative; width: 180px; overflow: hidden; border-radius: 12px; }
+
+/* ---- Folder label ---- */
+.folder-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+/* Force transparent background on bottom navbar buttons and SVGs to resolve user-agent/extensions issues */
+nav.fixed.bottom-6 button:not(.morph-btn),
+nav.fixed.bottom-6 button:not(.morph-btn) svg {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Ensure smooth hover effect with semi-transparent background */
+nav.fixed.bottom-6 button:not(.morph-btn):hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Navbar Premium Button Responsive Sizes */
+.nav-premium-btn {
+  width: 120px !important;
+  height: 42px !important;
+}
+@media (min-width: 640px) {
+  .nav-premium-btn {
+    width: 180px !important;
+    height: 48px !important;
+  }
+}
+
