@@ -644,3 +644,37 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
   }
 }
 
+/* =========================
+   MOBILE FAN NAVIGATION
+   Apple-inspired neumorphic
+========================= */
+
+@media (max-width: 767px) {
+  /* Fan petal active/tap state */
+  .fan-petal:active {
+    background: linear-gradient(180deg, #f0f0f0 0%, #e8e8e8 100%) !important;
+    box-shadow:
+      0 6px 16px rgba(0,0,0,0.05),
+      0 2px 6px rgba(0,0,0,0.03),
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      inset 0 -1px 2px rgba(0,0,0,0.04) !important;
+  }
+
+  /* Dock side buttons active state */
+  .mobile-fan-nav button:active {
+    transform: scale(0.9);
+  }
+
+  /* Hide any scrollbar from fan overflow */
+  .mobile-fan-nav {
+    overflow: visible !important;
+  }
+}
+
+/* Ensure mobile nav doesn't interfere with desktop */
+@media (min-width: 768px) {
+  .mobile-fan-nav {
+    display: none !important;
+  }
+}
+
