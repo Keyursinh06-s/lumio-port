@@ -1,15 +1,21 @@
 import React, { useState, useId, useRef, useEffect } from 'react';
 import { useInView } from 'framer-motion';
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 export default function FolderCard({ title, images = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const id = useId();
   const ref = useRef(null);
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const inView = useInView(ref, { once: false, margin: "-35% 0px -35% 0px" });
 
   useEffect(() => {
-    setIsOpen(inView);
-  }, [inView]);
+    if (isMobile) {
+      setIsOpen(inView);
+    } else {
+      setIsOpen(false);
+    }
+  }, [inView, isMobile]);
 
   const backGradId = `backGrad${id}`;
   const frontGradId = `frontGrad${id}`;
