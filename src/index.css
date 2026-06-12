@@ -611,8 +611,8 @@
 }
 
 /* Force transparent background on bottom navbar buttons and SVGs to resolve user-agent/extensions issues */
-nav.fixed.bottom-6 button:not(.morph-btn),
-nav.fixed.bottom-6 button:not(.morph-btn) svg {
+nav.desktop-nav-dock button:not(.morph-btn),
+nav.desktop-nav-dock button:not(.morph-btn) svg {
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;

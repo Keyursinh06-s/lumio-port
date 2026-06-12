@@ -76,6 +76,7 @@ export default function Navbar({ currentPath, onNavigate }) {
       x: 0,
       y: 0,
       scale: 0,
+      rotate: 0,
       opacity: 0,
       transition: {
         type: 'spring',
@@ -92,6 +93,7 @@ export default function Navbar({ currentPath, onNavigate }) {
         x,
         y,
         scale: 1,
+        rotate: petal.angle,
         opacity: 1,
         transition: {
           type: 'spring',
@@ -122,7 +124,7 @@ export default function Navbar({ currentPath, onNavigate }) {
       <nav 
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-dock border border-black/5 rounded-full px-4 py-2 shadow-2xl items-center gap-2 max-w-2xl h-[64px] overflow-visible"
+        className="desktop-nav-dock hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-dock border border-black/5 rounded-full px-4 py-2 shadow-2xl items-center gap-2 max-w-2xl h-[64px] overflow-visible"
       >
         <div className="flex items-center gap-2 pr-2 border-r border-black/10 h-full overflow-visible">
           {navItems.map((item) => {
@@ -179,7 +181,7 @@ export default function Navbar({ currentPath, onNavigate }) {
                     handleNavClick(petal.id);
                     setIsOpen(false);
                   }}
-                  className="absolute w-[72px] h-[92px] bg-white/95 backdrop-blur-md border border-black/5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] rounded-[36px_36px_20px_20px] flex flex-col items-center justify-center gap-1 cursor-pointer active:scale-95 transition-transform origin-bottom pointer-events-auto"
+                  className="absolute w-[72px] h-[92px] bg-white/95 backdrop-blur-md border border-black/5 shadow-[0_12px_30px_rgba(0,0,0,0.08)] rounded-[36px_36px_20px_20px] flex flex-col items-center justify-center gap-1 cursor-pointer active:scale-95 transition-transform origin-bottom pointer-events-auto"
                   style={{
                     left: '-36px', // w-[72px]/2
                     top: '-46px',  // h-[92px]/2
@@ -197,7 +199,7 @@ export default function Navbar({ currentPath, onNavigate }) {
           {/* Central Black Hamburger Button */}
           <button
             onClick={() => setIsOpen((prev) => !prev)}
-            className="w-14 h-14 rounded-full bg-brand-black flex items-center justify-center text-white shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer relative z-50 border-0 outline-none"
+            className="w-14 h-14 rounded-full bg-brand-black flex items-center justify-center text-white shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:scale-105 active:scale-95 transition-all cursor-pointer relative z-50 border-4 border-white outline-none"
             aria-label="Toggle menu"
           >
             <div className="relative w-6 h-6 flex flex-col items-center justify-center">
