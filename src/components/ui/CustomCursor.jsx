@@ -24,7 +24,14 @@ export default function CustomCursor() {
     const handleHover = (e) => {
       const target = e.target.closest('[data-cursor]');
       if (target) {
-        setCursorType(target.getAttribute('data-cursor'));
+        const rawType = target.getAttribute('data-cursor');
+        if (rawType === 'project') {
+          setCursorType('hover-project');
+        } else if (rawType === 'folder') {
+          setCursorType('hover-folder');
+        } else {
+          setCursorType(rawType);
+        }
       } else if (e.target.closest('button, a, input, select, textarea, [role="button"], .folder-root')) {
         setCursorType('hover-link');
       } else {
