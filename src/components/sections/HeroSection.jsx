@@ -82,7 +82,7 @@ export default function HeroSection() {
   const scrollMockups = [...mockups, ...mockups];
 
   return (
-    <section id="hero" className="w-full min-h-screen pt-16 sm:pt-28 pb-8 sm:pb-16 px-4 flex flex-col items-center justify-start text-center relative z-10 overflow-hidden">
+    <section id="hero" className="w-full min-h-fit sm:min-h-screen pt-8 sm:pt-28 pb-6 sm:pb-16 px-4 flex flex-col items-center justify-start text-center relative z-10 overflow-hidden">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -92,7 +92,7 @@ export default function HeroSection() {
         {/* Top Status & Social Row */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-row items-center gap-2.5 sm:gap-4 bg-white/40 backdrop-blur-sm px-3.5 py-2 sm:px-6 sm:py-3 rounded-full border border-black/5 shadow-sm mb-4 sm:mb-8 w-auto max-w-[95vw] sm:max-w-none"
+          className="flex flex-row items-center gap-2.5 sm:gap-4 bg-white/40 backdrop-blur-sm px-3.5 py-2 sm:px-6 sm:py-3 rounded-full border border-black/5 shadow-sm mb-3 sm:mb-8 w-auto max-w-[95vw] sm:max-w-none"
         >
           {/* Avatar & Name */}
           <div className="flex items-center gap-2.5">
@@ -140,7 +140,7 @@ export default function HeroSection() {
         {/* Rating Badge */}
         <motion.div
           variants={itemVariants}
-          className="flex items-center gap-2 bg-white px-4 py-1.5 rounded-full border border-brand-border-gray/20 shadow-sm mb-4 sm:mb-6"
+          className="flex items-center gap-2 bg-white px-4 py-1.5 rounded-full border border-brand-border-gray/20 shadow-sm mb-3 sm:mb-6"
         >
           <div className="flex gap-0.5 text-black">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -153,7 +153,7 @@ export default function HeroSection() {
         {/* Headline */}
         <motion.h1
           variants={itemVariants}
-          className="text-4xl sm:text-6xl md:text-[64px] font-medium text-brand-black tracking-tight mb-4 sm:mb-6 max-w-3xl font-heading"
+          className="text-4xl sm:text-6xl md:text-[64px] font-medium text-brand-black tracking-tight mb-3 sm:mb-6 max-w-3xl font-heading"
           style={{ lineHeight: '0.9em' }}
         >
           I craft websites that hustle as hard as you do
@@ -162,14 +162,14 @@ export default function HeroSection() {
         {/* Subtext */}
         <motion.p
           variants={itemVariants}
-          className="text-base text-[#707070] max-w-2xl mb-4 sm:mb-8 font-normal font-body"
+          className="text-base text-[#707070] max-w-2xl mb-3 sm:mb-8 font-normal font-body"
           style={{ lineHeight: '22px' }}
         >
           I design innovative solutions that captivate audiences, and every interaction inspires action.
         </motion.p>
 
         {/* CTA Button — Premium with label morph */}
-        <motion.div variants={itemVariants} className="mb-4 sm:mb-16">
+        <motion.div variants={itemVariants} className="mb-3 sm:mb-16">
           <PremiumButton onClick={handlePlansClick} hoverText="View Plans & Pricing" />
         </motion.div>
       </motion.div>

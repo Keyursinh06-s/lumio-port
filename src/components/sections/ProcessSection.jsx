@@ -112,10 +112,10 @@ export default function ProcessSection() {
   return (
     <section
       id="process"
-      className="w-full py-10 sm:py-24 px-4 flex flex-col items-center justify-start text-center relative z-10"
+      className="w-full py-8 sm:py-24 px-4 flex flex-col items-center justify-start text-center relative z-10"
     >
       {/* Process Header */}
-      <div className="mb-8 sm:mb-20">
+      <div className="mb-6 sm:mb-20">
         <span className="inline-block bg-brand-black text-white text-xs font-bold px-4 py-1.5 rounded-full mb-4 shadow-sm">
           Process
         </span>

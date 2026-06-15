@@ -53,14 +53,14 @@ export default function PricingSection() {
   };
 
   return (
-    <section id="pricing" className="w-full py-10 sm:py-24 px-4 flex flex-col items-center justify-start text-center relative z-10">
+    <section id="pricing" className="w-full py-8 sm:py-24 px-4 flex flex-col items-center justify-start text-center relative z-10">
       {/* Pricing Header */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={headerVariants}
-        className="mb-6 sm:mb-12"
+        className="mb-5 sm:mb-12"
       >
         <span className="inline-block bg-brand-black text-white text-xs font-bold px-4 py-1.5 rounded-full mb-4 shadow-sm">
           Pricings

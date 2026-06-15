@@ -80,14 +80,14 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" className="w-full py-10 sm:py-24 px-4 flex flex-col items-center justify-start text-center relative z-10">
+    <section id="faq" className="w-full py-8 sm:py-24 px-4 flex flex-col items-center justify-start text-center relative z-10">
       {/* FAQ Header */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={headerVariants}
-        className="mb-8 sm:mb-16"
+        className="mb-6 sm:mb-16"
       >
         <span className="inline-block bg-brand-black text-white text-xs font-bold px-4 py-1.5 rounded-full mb-4 shadow-sm">
           FAQ
