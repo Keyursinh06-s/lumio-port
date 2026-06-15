@@ -140,7 +140,7 @@ export default function HeroSection() {
         {/* Rating Badge */}
         <motion.div
           variants={itemVariants}
-          className="flex items-center gap-2 bg-white px-4 py-1.5 rounded-full border border-brand-border-gray/20 shadow-sm mb-3 sm:mb-6"
+          className="flex items-center gap-2 bg-white px-4 py-1.5 rounded-full border border-brand-border-gray/20 shadow-sm mb-6 sm:mb-6"
         >
           <div className="flex gap-0.5 text-black">
             {Array.from({ length: 5 }).map((_, i) => (

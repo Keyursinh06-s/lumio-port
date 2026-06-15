@@ -21,7 +21,7 @@ const steps = [
 
 function StepCard({ step, idx, isEven }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: '-50% 0px -50% 0px' });
+  const isInView = useInView(ref, { once: false, margin: '-30% 0px -30% 0px' });
 
   return (
     <div

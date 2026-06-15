@@ -8,7 +8,31 @@ export default function useLenis() {
       duration: 1.2,          // scroll duration in seconds
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // ease-out-expo
       smoothWheel: true,     // smooth wheel scrolling
-      syncTouch: false,      // preserve native touch scroll physics on mobile devices
+      syncTouch: true,       // enable smooth synced touch scroll on mobile
+      touchMultiplier: 1.2,  // default touch scroll responsiveness
+    });
+
+    // Dynamic scroll damping for the process section
+    lenis.on('scroll', () => {
+      const processEl = document.getElementById('process');
+      if (processEl) {
+        const rect = processEl.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Active zone: from when the process section starts entering the viewport
+        // until it has fully scrolled out of view.
+        const isIntersecting = rect.top < windowHeight * 0.9 && rect.bottom > windowHeight * 0.1;
+        
+        if (isIntersecting) {
+          // Apply significant damping (slow down scrolling by ~55%)
+          lenis.options.wheelMultiplier = 0.45;
+          lenis.options.touchMultiplier = 0.55;
+        } else {
+          // Reset to standard multipliers
+          lenis.options.wheelMultiplier = 1.0;
+          lenis.options.touchMultiplier = 1.2;
+        }
+      }
     });
 
     // Request Animation Frame loop for Lenis
