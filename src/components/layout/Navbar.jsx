@@ -163,11 +163,9 @@ function MobileFanNav({ currentPath, onNavigate }) {
 
       {/* ---- Fan petals + icons ---- */}
       <div style={{
-        position: 'absolute',
-        bottom: '-10px',
+        position: 'relative',
         width: 'min(100vw, 420px)',
         pointerEvents: 'none',
-        zIndex: 1,
       }}>
         <AnimatePresence>
           {isOpen && (
