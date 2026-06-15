@@ -290,8 +290,8 @@ function MobileFanNav({ currentPath, onNavigate }) {
                         height: isCenter ? '26px' : '22px',
                         strokeWidth: 1.75,
                         color: isCenter
-                          ? 'rgba(0,0,0,0.82)'
-                          : 'rgba(0,0,0,0.42)',
+                          ? '#1F2937'
+                          : 'rgba(31, 41, 55, 0.45)',
                         transition: 'color 0.2s',
                       }}
                     />
@@ -302,8 +302,8 @@ function MobileFanNav({ currentPath, onNavigate }) {
                         lineHeight: 1,
                         letterSpacing: '-0.01em',
                         color: isCenter
-                          ? 'rgba(0,0,0,0.82)'
-                          : 'rgba(0,0,0,0.42)',
+                          ? '#1F2937'
+                          : 'rgba(31, 41, 55, 0.45)',
                         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Geist, Inter, sans-serif',
                         whiteSpace: 'nowrap',
                         transition: 'color 0.2s',
@@ -317,8 +317,8 @@ function MobileFanNav({ currentPath, onNavigate }) {
                         height: '4px',
                         borderRadius: '50%',
                         backgroundColor: isCenter
-                          ? 'rgba(0,0,0,0.28)'
-                          : 'rgba(0,0,0,0.12)',
+                          ? '#1E1E1E'
+                          : '#D1D5DB',
                         transition: 'background-color 0.2s',
                       }}
                     />
