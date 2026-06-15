@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import PremiumButton from '../ui/PremiumButton';
+import Magnetic from '../ui/Magnetic';
 
 const Twitter = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -172,7 +173,9 @@ export default function HeroSection() {
 
         {/* CTA Button — Premium with label morph */}
         <motion.div variants={itemVariants} className="mb-3 sm:mb-16">
-          <PremiumButton onClick={handlePlansClick} hoverText="View Plans & Pricing" />
+          <Magnetic range={45}>
+            <PremiumButton onClick={handlePlansClick} hoverText="View Plans & Pricing" />
+          </Magnetic>
         </motion.div>
       </motion.div>
 

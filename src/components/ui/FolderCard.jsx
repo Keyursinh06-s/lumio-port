@@ -30,6 +30,7 @@ export default function FolderCard({ title, images = [] }) {
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
         onClick={() => setIsOpen((prev) => !prev)}
+        data-cursor="folder"
       >
         {/* Cards with images */}
         <div className="cards">

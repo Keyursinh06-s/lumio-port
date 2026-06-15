@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
+import CustomCursor from './components/ui/CustomCursor';
 import useLenis from './hooks/useLenis';
 import './App.css';
 
@@ -82,18 +84,43 @@ export default function App() {
         className="fixed inset-0 bg-[url('https://framerusercontent.com/images/CC0JINKmEAhG7PuLwqAk8MhTQw.webp')] bg-cover bg-center opacity-[0.08] pointer-events-none -z-10" 
         style={{ mixBlendMode: 'multiply' }}
       />
+      {/* Ambient Film Grain Overlay */}
+      <div className="grain-overlay" />
 
-      {/* 2. Main Page Render */}
-      <main className="w-full flex-grow">
-        {currentPage === 'home' ? (
-          <Home onProjectClick={handleProjectClick} />
-        ) : (
-          <ProjectDetail 
-            projectId={activeProjectId} 
-            onNavigate={handleNavigate}
-            onProjectClick={handleProjectClick}
-          />
-        )}
+      {/* Premium Custom Cursor (Context-Aware) */}
+      <CustomCursor />
+
+      {/* 2. Main Page Render with Frosted Page Transitions */}
+      <main className="w-full flex-grow overflow-visible">
+        <AnimatePresence mode="wait">
+          {currentPage === 'home' ? (
+            <motion.div
+              key="home-page"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: '100%' }}
+            >
+              <Home onProjectClick={handleProjectClick} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`detail-${activeProjectId}`}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: '100%' }}
+            >
+              <ProjectDetail 
+                projectId={activeProjectId} 
+                onNavigate={handleNavigate}
+                onProjectClick={handleProjectClick}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* 3. Floating Bottom Dock Navigation */}

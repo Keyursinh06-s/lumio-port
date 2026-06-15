@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import PremiumButton from '../ui/PremiumButton';
+import Magnetic from '../ui/Magnetic';
 import { Home, Layers, Briefcase, MessageSquare, Zap, ShieldQuestion, BookOpen, User, LayoutGrid, Send } from 'lucide-react';
 
 /* ===================================================
@@ -509,24 +510,27 @@ export default function Navbar({ currentPath, onNavigate }) {
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
-              <DockIcon
-                key={item.id}
-                mouseX={mouseX}
-                onClick={() => handleNavClick(item.id)}
-                label={item.label}
-              >
-                <Icon className="w-5 h-5" />
-              </DockIcon>
+              <Magnetic key={item.id} range={28}>
+                <DockIcon
+                  mouseX={mouseX}
+                  onClick={() => handleNavClick(item.id)}
+                  label={item.label}
+                >
+                  <Icon className="w-5 h-5" />
+                </DockIcon>
+              </Magnetic>
             );
           })}
         </div>
-        <PremiumButton
-          onClick={() => handleNavClick('pricing')}
-          className="nav-premium-btn"
-          style={{ transform: 'scale(0.85)', transformOrigin: 'right center' }}
-          defaultText="Let's go"
-          hoverText="Pricing"
-        />
+        <Magnetic range={35}>
+          <PremiumButton
+            onClick={() => handleNavClick('pricing')}
+            className="nav-premium-btn"
+            style={{ transform: 'scale(0.85)', transformOrigin: 'right center' }}
+            defaultText="Let's go"
+            hoverText="Pricing"
+          />
+        </Magnetic>
       </nav>
 
       {/* Mobile SVG Fan Navigation — NEW */}
