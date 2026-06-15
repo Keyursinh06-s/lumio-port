@@ -66,11 +66,11 @@ const OPEN_DELAYS = [0.16, 0.08, 0, 0.08, 0.16];
 
 // Icon positions on each petal (% of viewBox 719×566)
 const ICON_POS = [
-  { x: 11.7, y: 64.1 },   // Left outer
-  { x: 25.2, y: 30.6 },   // Left inner
-  { x: 50.6, y: 14.1 },   // Center
-  { x: 75.1, y: 30.6 },   // Right inner
-  { x: 88.3, y: 64.1 },   // Right outer
+  { x: 11.6, y: 65.0 },   // Left outer
+  { x: 25.2, y: 31.4 },   // Left inner
+  { x: 50.6, y: 15.0 },   // Center
+  { x: 75.1, y: 31.4 },   // Right inner
+  { x: 88.2, y: 65.0 },   // Right outer
 ];
 
 // Render order: outer petals behind, center in front
@@ -252,77 +252,83 @@ function MobileFanNav({ currentPath, onNavigate }) {
                 const isCenter = i === 2;
 
                 return (
-                  <motion.button
-                    key={`nav-${item.id}`}
-                    onClick={() => handleNavClick(item.id)}
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 200,
-                      damping: 20,
-                      delay: OPEN_DELAYS[i] + 0.06,
-                    }}
-                    whileTap={{ scale: 0.85 }}
+                  <div
+                    key={`nav-wrap-${item.id}`}
                     style={{
                       position: 'absolute',
                       left: `${ICON_POS[i].x}%`,
                       top: `${ICON_POS[i].y}%`,
                       transform: 'translate(-50%, -50%)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: '4px',
-                      background: 'transparent',
-                      border: 'none',
-                      outline: 'none',
-                      cursor: 'pointer',
-                      padding: '8px 10px',
-                      WebkitTapHighlightColor: 'transparent',
-                      pointerEvents: 'auto',
+                      pointerEvents: 'none',
                     }}
-                    aria-label={`Go to ${item.label}`}
                   >
-                    <Icon
-                      style={{
-                        width: isCenter ? '26px' : '22px',
-                        height: isCenter ? '26px' : '22px',
-                        strokeWidth: 1.75,
-                        color: isCenter
-                          ? '#1F2937'
-                          : 'rgba(31, 41, 55, 0.45)',
-                        transition: 'color 0.2s',
+                    <motion.button
+                      onClick={() => handleNavClick(item.id)}
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 200,
+                        damping: 20,
+                        delay: OPEN_DELAYS[i] + 0.06,
                       }}
-                    />
-                    <span
+                      whileTap={{ scale: 0.85 }}
                       style={{
-                        fontSize: isCenter ? '12px' : '11px',
-                        fontWeight: 600,
-                        lineHeight: 1,
-                        letterSpacing: '-0.01em',
-                        color: isCenter
-                          ? '#1F2937'
-                          : 'rgba(31, 41, 55, 0.45)',
-                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Geist, Inter, sans-serif',
-                        whiteSpace: 'nowrap',
-                        transition: 'color 0.2s',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '4px',
+                        background: 'transparent',
+                        border: 'none',
+                        outline: 'none',
+                        cursor: 'pointer',
+                        padding: '8px 10px',
+                        WebkitTapHighlightColor: 'transparent',
+                        pointerEvents: 'auto',
                       }}
+                      aria-label={`Go to ${item.label}`}
                     >
-                      {item.label}
-                    </span>
-                    <span
-                      style={{
-                        width: '4px',
-                        height: '4px',
-                        borderRadius: '50%',
-                        backgroundColor: isCenter
-                          ? '#1E1E1E'
-                          : '#D1D5DB',
-                        transition: 'background-color 0.2s',
-                      }}
-                    />
-                  </motion.button>
+                      <Icon
+                        style={{
+                          width: isCenter ? '26px' : '22px',
+                          height: isCenter ? '26px' : '22px',
+                          strokeWidth: 1.75,
+                          color: isCenter
+                            ? '#1F2937'
+                            : 'rgba(31, 41, 55, 0.45)',
+                          transition: 'color 0.2s',
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: isCenter ? '12px' : '11px',
+                          fontWeight: 600,
+                          lineHeight: 1,
+                          letterSpacing: '-0.01em',
+                          color: isCenter
+                            ? '#1F2937'
+                            : 'rgba(31, 41, 55, 0.45)',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Geist, Inter, sans-serif',
+                          whiteSpace: 'nowrap',
+                          transition: 'color 0.2s',
+                        }}
+                      >
+                        {item.label}
+                      </span>
+                      <span
+                        style={{
+                          width: '4px',
+                          height: '4px',
+                          borderRadius: '50%',
+                          backgroundColor: isCenter
+                            ? '#1E1E1E'
+                            : '#D1D5DB',
+                          transition: 'background-color 0.2s',
+                        }}
+                      />
+                    </motion.button>
+                  </div>
                 );
               })}
             </motion.div>
