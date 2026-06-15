@@ -91,7 +91,7 @@ export default function ServicesSection() {
   return (
     <section
       id="services"
-      className="w-full py-24 px-4 flex flex-col items-center justify-start text-center relative z-10"
+      className="w-full py-10 sm:py-24 px-4 flex flex-col items-center justify-start text-center relative z-10"
     >
       {/* Services Header */}
       <motion.div
@@ -99,7 +99,7 @@ export default function ServicesSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={headerVariants}
-        className="mb-16"
+        className="mb-8 sm:mb-16"
       >
         <span className="inline-block bg-brand-black text-white text-xs font-bold px-4 py-1.5 rounded-full mb-4 shadow-sm">
           Services

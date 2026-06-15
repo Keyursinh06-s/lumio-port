@@ -144,7 +144,7 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="w-full max-w-4xl mx-auto px-4 py-16 flex flex-col items-center justify-start text-center relative z-10">
+    <section className="w-full max-w-4xl mx-auto px-4 py-10 sm:py-16 flex flex-col items-center justify-start text-center relative z-10">
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
