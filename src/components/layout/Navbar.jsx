@@ -151,9 +151,9 @@ function MobileFanNav({ currentPath, onNavigate }) {
             style={{
               position: 'fixed',
               inset: 0,
-              background: 'rgba(0,0,0,0.05)',
-              backdropFilter: 'blur(3px)',
-              WebkitBackdropFilter: 'blur(3px)',
+              background: 'rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(10px) saturate(1.3)',
+              WebkitBackdropFilter: 'blur(10px) saturate(1.3)',
               zIndex: -1,
               pointerEvents: 'auto',
             }}
