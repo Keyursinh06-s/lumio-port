@@ -186,9 +186,23 @@ function MobileFanNav({ currentPath, onNavigate }) {
                   height: 'auto',
                   display: 'block',
                   overflow: 'visible',
-                  filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.08))',
+                  filter: 'drop-shadow(0 12px 30px rgba(0,0,0,0.06)) drop-shadow(0 4px 10px rgba(0,0,0,0.03))',
                 }}
               >
+                <defs>
+                  <linearGradient id="selected-petal-grad" x1="363.5" y1="0" x2="363.5" y2="391" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="rgba(255, 255, 255, 0.99)" />
+                    <stop offset="100%" stopColor="rgba(255, 255, 255, 0.88)" />
+                  </linearGradient>
+                  <linearGradient id="inner-petal-grad" x1="181.4" y1="103" x2="181.4" y2="408" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="rgba(246, 245, 248, 0.95)" />
+                    <stop offset="100%" stopColor="rgba(238, 237, 240, 0.80)" />
+                  </linearGradient>
+                  <linearGradient id="outer-petal-grad" x1="84" y1="285" x2="84" y2="490" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="rgba(235, 233, 238, 0.95)" />
+                    <stop offset="100%" stopColor="rgba(224, 221, 227, 0.74)" />
+                  </linearGradient>
+                </defs>
                 {Z_ORDER.map(i => {
                   const isCenter = i === 2;
                   const item = arranged[i];
@@ -198,10 +212,10 @@ function MobileFanNav({ currentPath, onNavigate }) {
                       d={PETAL_PATHS[i]}
                       fill={
                         i === 2
-                          ? 'rgba(255, 255, 255, 0.96)'
+                          ? 'url(#selected-petal-grad)'
                           : (i === 1 || i === 3)
-                          ? 'rgba(243, 242, 244, 0.88)'
-                          : 'rgba(232, 230, 235, 0.88)'
+                          ? 'url(#inner-petal-grad)'
+                          : 'url(#outer-petal-grad)'
                       }
                       stroke={
                         i === 2
@@ -350,15 +364,16 @@ function MobileFanNav({ currentPath, onNavigate }) {
           position: 'relative',
           zIndex: 10,
           marginTop: '-16px',
-          background: 'rgba(242, 242, 243, 0.82)',
-          backdropFilter: 'blur(24px) saturate(1.6)',
-          WebkitBackdropFilter: 'blur(24px) saturate(1.6)',
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(244, 244, 246, 0.74) 100%)',
+          backdropFilter: 'blur(28px) saturate(1.8) contrast(1.05)',
+          WebkitBackdropFilter: 'blur(28px) saturate(1.8) contrast(1.05)',
           boxShadow: `
-            0 16px 40px rgba(0,0,0,0.07),
-            0 6px 16px rgba(0,0,0,0.04),
-            inset 0 1px 0 rgba(255,255,255,0.65)
+            0 16px 40px rgba(0,0,0,0.06),
+            0 6px 16px rgba(0,0,0,0.03),
+            inset 0 1px 0 rgba(255,255,255,0.8),
+            inset 0 -1px 2px rgba(255,255,255,0.2)
           `,
-          border: '1px solid rgba(255,255,255,0.45)',
+          border: '1px solid rgba(255,255,255,0.5)',
         }}
       >
         {/* Home button */}
@@ -392,7 +407,7 @@ function MobileFanNav({ currentPath, onNavigate }) {
               width: '56px',
               height: '56px',
               borderRadius: '50%',
-              border: '6px solid rgba(249,249,250,0.92)',
+              border: '6px solid rgba(255,255,255,0.95)',
               outline: 'none',
               cursor: 'pointer',
               display: 'flex',
@@ -401,7 +416,7 @@ function MobileFanNav({ currentPath, onNavigate }) {
               position: 'relative',
               top: '-14px',
               background: 'radial-gradient(circle at 50% 28%, #2a2a2a 0%, #000 100%)',
-              boxShadow: '0 10px 28px rgba(0,0,0,0.28), 0 4px 10px rgba(0,0,0,0.15)',
+              boxShadow: '0 10px 28px rgba(0,0,0,0.28), 0 4px 10px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.3)',
               WebkitTapHighlightColor: 'transparent',
               zIndex: 10,
             }}
