@@ -1,35 +1,46 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useVelocity, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 export default function VelocityScrollItem({ children }) {
   const containerRef = useRef(null);
   
-  // Track scroll position
-  const { scrollY } = useScroll();
+  // Track scroll position of the element relative to the viewport
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
   
-  // Track velocity of scrollY
-  const scrollVelocity = useVelocity(scrollY);
-  
-  // Transform scroll velocity to scale.
-  // Standard scroll velocity can reach values between -8000 and 8000 during fast scrolls.
-  // We scale down slightly (to 0.9) when scrolling fast, returning to 1.0 when stationary.
+  // Clean, organic scale tied to scroll position (0.95 -> 1.0 -> 0.95)
   const rawScale = useTransform(
-    scrollVelocity,
-    [-8000, 0, 8000],
-    [0.9, 1, 0.9]
+    scrollYProgress,
+    [0, 0.5, 1],
+    [0.95, 1, 0.95]
   );
   
-  // Smooth the scale transitions using spring physics
+  // Smooth out the scale transition using spring physics
   const scale = useSpring(rawScale, {
-    damping: 30,
-    stiffness: 170,
-    mass: 0.4
+    damping: 25,
+    stiffness: 120,
+    mass: 0.2
+  });
+
+  // Smooth opacity fade at viewport edges (0.7 -> 1.0 -> 0.7)
+  const rawOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.25, 0.75, 1],
+    [0.7, 1, 1, 0.7]
+  );
+  
+  const opacity = useSpring(rawOpacity, {
+    damping: 25,
+    stiffness: 120,
+    mass: 0.2
   });
 
   return (
     <motion.div 
       ref={containerRef} 
-      style={{ scale, transformOrigin: "center center" }}
+      style={{ scale, opacity, transformOrigin: "center center" }}
       className="w-full flex justify-center"
     >
       {children}
