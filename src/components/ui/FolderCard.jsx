@@ -35,17 +35,17 @@ export default function FolderCard({ title, images = [] }) {
         <div className="cards">
           <div className={`card ${isVertical ? 'card-vertical' : 'card-horizontal'} card-3`}>
             {images[2] && (
-              <img src={images[2]} alt={`${title} preview 3`} className="card-img" />
+              <img src={images[2]} alt={`${title} preview 3`} className="card-img" loading="lazy" decoding="async" />
             )}
           </div>
           <div className={`card ${isVertical ? 'card-vertical' : 'card-horizontal'} card-2`}>
             {images[1] && (
-              <img src={images[1]} alt={`${title} preview 2`} className="card-img" />
+              <img src={images[1]} alt={`${title} preview 2`} className="card-img" loading="lazy" decoding="async" />
             )}
           </div>
           <div className={`card ${isVertical ? 'card-vertical' : 'card-horizontal'} card-1`}>
             {images[0] && (
-              <img src={images[0]} alt={`${title} preview 1`} className="card-img" />
+              <img src={images[0]} alt={`${title} preview 1`} className="card-img" loading="lazy" decoding="async" />
             )}
           </div>
         </div>

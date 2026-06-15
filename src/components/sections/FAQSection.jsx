@@ -85,7 +85,7 @@ export default function FAQSection() {
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-40px" }}
         variants={headerVariants}
         className="mb-6 sm:mb-16"
       >
@@ -105,7 +105,7 @@ export default function FAQSection() {
         variants={listVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={{ once: true, margin: "-45px" }}
         className="w-full max-w-2xl flex flex-col gap-4 mb-12"
       >
         {faqs.map((faq) => (

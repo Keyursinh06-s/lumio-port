@@ -100,6 +100,8 @@ export default function HeroSection() {
               src="/logo.png"
               alt="lumio logo"
               className="h-5 sm:h-6 w-auto object-contain"
+              loading="eager"
+              fetchpriority="high"
             />
             <div className="text-left">
               <h3 className="font-semibold text-brand-black text-xs sm:text-sm">Keyursinh</h3>
@@ -197,7 +199,8 @@ export default function HeroSection() {
                   src={mockup.src}
                   alt={mockup.alt}
                   className="w-full h-auto object-cover"
-                  loading="lazy"
+                  loading={index < 2 ? "eager" : "lazy"}
+                  {...(index < 2 ? { fetchpriority: "high" } : {})}
                 />
               </div>
             ))}

@@ -91,6 +91,8 @@ export default function Slider() {
                 src={current.image}
                 alt={current.name}
                 className="w-14 h-14 rounded-full object-cover border border-black/5"
+                loading="lazy"
+                decoding="async"
               />
               <div>
                 <h4 className="font-semibold text-base sm:text-lg text-brand-black">

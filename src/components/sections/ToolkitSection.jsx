@@ -131,7 +131,7 @@ export default function ToolkitSection() {
             {/* Left Content (Avatar Icon + Text) - Positioned over background */}
             <div className="relative z-10 flex items-center gap-4 pl-1 mix-blend-difference">
               <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-black/5 flex-shrink-0 shadow-sm">
-                <img src={tool.icon} alt={tool.name} className="w-7 h-7 object-contain" />
+                <img src={tool.icon} alt={tool.name} className="w-7 h-7 object-contain" loading="lazy" decoding="async" />
               </div>
               <div className="text-left">
                 <h3 className="font-bold text-sm sm:text-base text-white">

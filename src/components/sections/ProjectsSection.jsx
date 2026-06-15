@@ -125,6 +125,8 @@ export default function ProjectsSection({ onProjectClick }) {
                   src={project.image}
                   alt={`${project.title} Desktop UI`}
                   className="w-full h-full object-contain"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
 
@@ -135,6 +137,8 @@ export default function ProjectsSection({ onProjectClick }) {
                     src={project.logo}
                     alt={`${project.title} logo`}
                     className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border border-black/5 bg-black"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="text-left">
                     <h4 className="font-semibold text-brand-black text-xs sm:text-base">

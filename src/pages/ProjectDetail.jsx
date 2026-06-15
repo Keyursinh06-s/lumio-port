@@ -204,6 +204,8 @@ export default function ProjectDetail({ projectId, onNavigate, onProjectClick })
                 src={imgUrl}
                 alt={`${project.title} detail ${idx + 1}`}
                 className="w-full h-full object-contain"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           ))}
@@ -230,6 +232,8 @@ export default function ProjectDetail({ projectId, onNavigate, onProjectClick })
                   src={nextLogoUrl}
                   alt={`${project.nextTitle} logo`}
                   className="w-9 h-9 object-contain"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div>

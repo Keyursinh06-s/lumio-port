@@ -216,6 +216,7 @@ function MobileFanNav({ currentPath, onNavigate }) {
                         transformBox: 'view-box',
                         cursor: 'pointer',
                         pointerEvents: 'auto',
+                        willChange: 'transform, opacity',
                       }}
                       onClick={() => handleNavClick(item.id)}
                       initial={{
@@ -286,6 +287,7 @@ function MobileFanNav({ currentPath, onNavigate }) {
                         padding: '8px 10px',
                         WebkitTapHighlightColor: 'transparent',
                         pointerEvents: 'auto',
+                        willChange: 'transform, opacity',
                       }}
                       aria-label={`Go to ${item.label}`}
                     >
