@@ -687,35 +687,342 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
 
 /* =========================
    MOBILE FAN NAVIGATION
-   Apple-inspired neumorphic
-========================= */
-
-@media (max-width: 767px) {
-  /* Fan petal active/tap state */
-  .fan-petal:active {
-    background: linear-gradient(180deg, #f0f0f0 0%, #e8e8e8 100%) !important;
-    box-shadow:
-      0 6px 16px rgba(0,0,0,0.05),
-      0 2px 6px rgba(0,0,0,0.03),
-      inset 0 1px 0 rgba(255,255,255,0.9),
-      inset 0 -1px 2px rgba(0,0,0,0.04) !important;
-  }
-
-  /* Dock side buttons active state */
-  .mobile-fan-nav button:active {
-    transform: scale(0.9);
-  }
-
-  /* Hide any scrollbar from fan overflow */
-  .mobile-fan-nav {
-    overflow: visible !important;
-  }
+   Apple-inspired Premium Glass Fan
+   ========================= */
+:root {
+  --lumio-ink: #090b0f;
+  --lumio-muted: #858c96;
+  --lumio-nav-width: min(88vw, 846px);
+  --lumio-bottom: calc(10px + env(safe-area-inset-bottom));
+  --lumio-spring: cubic-bezier(.18, .92, .24, 1.12);
+  --lumio-soft-spring: cubic-bezier(.2, .82, .2, 1);
 }
 
-/* Ensure mobile nav doesn't interfere with desktop */
-@media (min-width: 768px) {
-  .mobile-fan-nav {
-    display: none !important;
+@media (max-width: 767px) {
+  .lumio-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    background:
+      linear-gradient(to top, rgba(245, 248, 250, .30) 0%, rgba(247, 249, 251, .12) 42%, rgba(255, 255, 255, 0) 76%);
+    transition: opacity .28s ease, visibility 0s linear .28s;
+  }
+  .lumio-scrim[data-visible="true"] {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity .28s ease;
+  }
+
+  .lumio-fan-nav {
+    position: fixed;
+    left: 50%;
+    bottom: var(--lumio-bottom);
+    z-index: 9999;
+    width: var(--lumio-nav-width);
+    transform: translate3d(-50%, 0, 0);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    isolation: isolate;
+  }
+  .lumio-fan-nav svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Real glass layers. They sit inside clipped foreignObjects, so the page
+     behind each individual petal is blurred instead of globally blurring the page. */
+  .glass-fo {
+    pointer-events: none;
+    overflow: visible;
+  }
+  .glass-surface {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(58% 48% at 32% 9%, rgba(255, 255, 255, .92), rgba(255, 255, 255, 0) 72%),
+      linear-gradient(145deg, rgba(255, 255, 255, .79) 0%, rgba(251, 253, 255, .59) 48%, rgba(231, 237, 242, .47) 100%);
+    -webkit-backdrop-filter: blur(28px) saturate(1.22) brightness(1.04);
+    backdrop-filter: blur(28px) saturate(1.22) brightness(1.04);
+  }
+  .glass-surface.active {
+    background:
+      radial-gradient(66% 54% at 48% 4%, rgba(255, 255, 255, .99), rgba(255, 255, 255, 0) 72%),
+      linear-gradient(160deg, rgba(255, 255, 255, .92), rgba(248, 252, 255, .73) 54%, rgba(226, 237, 246, .57));
+  }
+  .dock-glass {
+    border-radius: 45px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, .74), rgba(241, 245, 248, .54));
+    -webkit-backdrop-filter: blur(30px) saturate(1.18) brightness(1.04);
+    backdrop-filter: blur(30px) saturate(1.18) brightness(1.04);
+  }
+
+  .petal {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform-box: view-box;
+    transform-origin: 416px 416px;
+    transform: translateY(42px) scale(.045) rotate(var(--fold));
+    transition:
+      transform .64s var(--lumio-spring),
+      opacity .20s ease,
+      visibility 0s linear .64s;
+    cursor: pointer;
+    outline: none;
+    will-change: transform, opacity;
+  }
+  .petal.work { --fold: 0deg; --open-delay: 0ms; --close-delay: 72ms; }
+  .petal.about { --fold: 28deg; --open-delay: 34ms; --close-delay: 34ms; }
+  .petal.services { --fold: -28deg; --open-delay: 34ms; --close-delay: 34ms; }
+  .petal.blog { --fold: 58deg; --open-delay: 72ms; --close-delay: 0ms; }
+  .petal.contact { --fold: -58deg; --open-delay: 72ms; --close-delay: 0ms; }
+
+  .lumio-fan-nav[data-open="true"] .petal {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1) rotate(0deg);
+    transition-delay: var(--open-delay), var(--open-delay), 0s;
+  }
+  .lumio-fan-nav[data-open="false"] .petal {
+    transition-delay: var(--close-delay), 0ms, .64s;
+  }
+
+  .petal-hit {
+    fill: #fff;
+    fill-opacity: .001;
+    pointer-events: all;
+  }
+  .petal-tint {
+    fill: url(#petalTint);
+    opacity: .66;
+    transition: opacity .2s ease, filter .2s ease;
+    pointer-events: none;
+  }
+  .petal-stroke {
+    fill: none;
+    stroke: rgba(255, 255, 255, .96);
+    stroke-width: 1.45;
+    filter: url(#petalShadow);
+    transition: filter .2s ease, stroke .2s ease;
+    pointer-events: none;
+  }
+  .petal-highlight {
+    fill: none;
+    stroke: rgba(255, 255, 255, .67);
+    stroke-width: .78;
+    opacity: .74;
+    pointer-events: none;
+  }
+  .petal:hover .petal-stroke,
+  .petal:focus-visible .petal-stroke {
+    filter: url(#petalShadowHover);
+    stroke: rgba(255, 255, 255, 1);
+  }
+  .petal:hover .petal-tint,
+  .petal:focus-visible .petal-tint {
+    opacity: .82;
+  }
+  .petal:active {
+    transform-box: view-box;
+    transform-origin: 416px 416px;
+  }
+  .lumio-fan-nav[data-open="true"] .petal:active {
+    transform: scale(.984);
+  }
+
+  .petal-content {
+    transition: transform .22s var(--lumio-soft-spring);
+    pointer-events: none;
+  }
+  .petal:hover .petal-content,
+  .petal:focus-visible .petal-content {
+    transform: translateY(-3px);
+  }
+
+  .petal-icon {
+    fill: none;
+    stroke: var(--lumio-ink);
+    stroke-width: 3.05;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .petal-label {
+    fill: var(--lumio-ink);
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -.52px;
+    font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-rendering: geometricPrecision;
+  }
+  .petal-dot {
+    fill: var(--lumio-ink);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(.25);
+    transition: opacity .18s ease, transform .24s var(--lumio-spring);
+  }
+  .petal[aria-current="page"] .petal-dot {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .petal[aria-current="page"] .petal-tint {
+    fill: url(#activePetalTint);
+    opacity: .90;
+    filter: url(#activeGlow);
+  }
+
+  .dock-tint {
+    fill: url(#dockTint);
+    opacity: .46;
+    pointer-events: none;
+  }
+  .dock-stroke {
+    fill: none;
+    stroke: rgba(255, 255, 255, .96);
+    stroke-width: 1.35;
+    filter: url(#dockShadow);
+    pointer-events: none;
+  }
+  .dock-highlight {
+    fill: none;
+    stroke: rgba(255, 255, 255, .72);
+    stroke-width: .72;
+    opacity: .72;
+    pointer-events: none;
+  }
+
+  .dock-action {
+    cursor: pointer;
+    color: #8b929b;
+    outline: none;
+    transition: color .18s ease, transform .22s var(--lumio-soft-spring);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .dock-action:hover,
+  .dock-action:focus-visible {
+    color: #171b20;
+    transform: translateY(-3px) scale(1.04);
+  }
+  .dock-action path,
+  .dock-action rect,
+  .dock-action line,
+  .dock-action polyline {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3.45;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .hub {
+    cursor: pointer;
+    outline: none;
+    transform-box: view-box;
+    transform-origin: 416px 416px;
+    transition: transform .18s var(--lumio-soft-spring);
+  }
+  .hub:hover,
+  .hub:focus-visible {
+    transform: scale(1.035);
+  }
+  .hub:active {
+    transform: scale(.965);
+  }
+  .hub-shadow-disc {
+    fill: rgba(74, 85, 97, .16);
+    filter: url(#hubAmbientShadow);
+  }
+  .hub-outer {
+    fill: url(#hubRing);
+    stroke: rgba(255, 255, 255, .98);
+    stroke-width: 1.4;
+    filter: url(#hubRingShadow);
+  }
+  .hub-mid-ring {
+    fill: none;
+    stroke: rgba(210, 219, 226, .88);
+    stroke-width: 1.25;
+  }
+  .hub-core {
+    fill: url(#hubCore);
+    stroke: rgba(255, 255, 255, .18);
+    stroke-width: 1;
+    filter: url(#hubCoreShadow);
+  }
+  .hub-core-highlight {
+    fill: none;
+    stroke: rgba(255, 255, 255, .20);
+    stroke-width: 1.15;
+    stroke-linecap: round;
+  }
+  .hamburger,
+  .closemark {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 4;
+    stroke-linecap: round;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity .20s ease, transform .42s var(--lumio-spring);
+  }
+  .hamburger {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  .closemark {
+    opacity: 0;
+    transform: scale(.52) rotate(-62deg);
+  }
+  .lumio-fan-nav[data-open="true"] .hamburger {
+    opacity: 0;
+    transform: scale(.52) rotate(62deg);
+  }
+  .lumio-fan-nav[data-open="true"] .closemark {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+
+  .lumio-focus-ring {
+    fill: none;
+    stroke: #11151a;
+    stroke-width: 2.2;
+    stroke-dasharray: 5 6;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hub:focus-visible .lumio-focus-ring {
+    opacity: .7;
+  }
+
+  @media (max-width: 360px) {
+    :root {
+      --lumio-nav-width: min(94vw, 846px);
+      --lumio-bottom: calc(5px + env(safe-area-inset-bottom));
+    }
+  }
+  @media (min-width: 1100px) {
+    :root {
+      --lumio-nav-width: 846px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: .01ms !important;
+      animation-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
