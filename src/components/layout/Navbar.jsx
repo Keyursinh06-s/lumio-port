@@ -243,8 +243,8 @@ function DockIcon({ mouseX, onClick, label, children }) {
               <stop offset="1" stopColor="#dcebf5" stopOpacity=".40"/>
             </linearGradient>
             <linearGradient id="dockTint" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#ffffff" stopOpacity=".50"/>
-              <stop offset="1" stopColor="#e7edf2" stopOpacity=".35"/>
+              <stop offset="0" stopColor="#ffffff" stopOpacity=".15"/>
+              <stop offset="1" stopColor="#ffffff" stopOpacity=".05"/>
             </linearGradient>
             <linearGradient id="hubRing" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stopColor="#ffffff"/>
