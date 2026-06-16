@@ -22,7 +22,7 @@ function DockIcon({ mouseX, onClick, label, children }) {
       ref={ref}
       onClick={onClick}
       style={{ scale, transformOrigin: 'center bottom' }}
-      className="p-1 sm:p-2.5 rounded-full bg-transparent border-0 outline-none hover:bg-black/5 text-black/60 hover:text-black transition-colors duration-200 relative group flex items-center justify-center origin-bottom"
+      className="p-1.5 sm:p-3 rounded-full bg-transparent border-0 outline-none hover:bg-black/5 text-black/60 hover:text-black transition-colors duration-200 relative group flex items-center justify-center origin-bottom"
       aria-label={label}
     >
       {children}
@@ -545,9 +545,9 @@ export default function Navbar({ currentPath, onNavigate }) {
       <nav
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="desktop-nav-dock hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-dock border border-black/5 rounded-full px-4 py-2 shadow-2xl items-center gap-2 max-w-2xl h-[64px] overflow-visible"
+        className="desktop-nav-dock hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-dock border border-black/5 rounded-full px-5 py-2.5 shadow-2xl items-center gap-3.5 max-w-3xl h-[78px] overflow-visible"
       >
-        <div className="flex items-center gap-2 pr-2 border-r border-black/10 h-full overflow-visible">
+        <div className="flex items-center gap-3.5 pr-3 border-r border-black/10 h-full overflow-visible">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -557,7 +557,7 @@ export default function Navbar({ currentPath, onNavigate }) {
                   onClick={() => handleNavClick(item.id)}
                   label={item.label}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-[22px] h-[22px]" />
                 </DockIcon>
               </Magnetic>
             );
@@ -567,7 +567,7 @@ export default function Navbar({ currentPath, onNavigate }) {
           <PremiumButton
             onClick={() => handleNavClick('pricing')}
             className="nav-premium-btn"
-            style={{ transform: 'scale(0.85)', transformOrigin: 'right center' }}
+            style={{ transform: 'scale(0.95)', transformOrigin: 'right center' }}
             defaultText="Let's go"
             hoverText="Pricing"
           />
