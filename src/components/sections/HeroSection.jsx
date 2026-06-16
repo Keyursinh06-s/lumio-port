@@ -167,7 +167,7 @@ export default function HeroSection() {
           {/* Subtext */}
           <motion.p
             variants={itemVariants}
-            className="text-base text-[#707070] max-w-2xl mb-8 sm:mb-10 font-normal font-body"
+            className="text-base text-[#707070] max-w-2xl mb-5 sm:mb-6 font-normal font-body"
             style={{ lineHeight: '22px' }}
           >
             I design innovative solutions that captivate audiences, and every interaction inspires action.
@@ -175,7 +175,7 @@ export default function HeroSection() {
         </div>
 
         {/* CTA Button — Premium with label morph */}
-        <motion.div variants={itemVariants} className="mb-6 sm:mb-10">
+        <motion.div variants={itemVariants} className="mb-4 sm:mb-6">
           <Magnetic range={45}>
             <PremiumButton onClick={handlePlansClick} hoverText="View Plans & Pricing" />
           </Magnetic>
@@ -187,7 +187,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-full overflow-hidden relative mt-6 sm:mt-8"
+        className="w-full max-w-full overflow-hidden relative mt-2 sm:mt-4"
         style={{ perspective: '1200px' }}
       >
         <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
