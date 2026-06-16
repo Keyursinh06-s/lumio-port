@@ -233,18 +233,18 @@ function DockIcon({ mouseX, onClick, label, children }) {
             <clipPath id="clipContact"><path d="M490 399H770C804 399 829 384 831 354C834 316 814 269 777 243C749 222 720 220 692 237L473 365C452 378 464 399 490 399Z"/></clipPath>
 
             <linearGradient id="petalTint" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#ffffff" stopOpacity=".30"/>
-              <stop offset=".46" stopColor="#ffffff" stopOpacity=".12"/>
-              <stop offset="1" stopColor="#dce5ec" stopOpacity=".16"/>
+              <stop offset="0" stopColor="#ffffff" stopOpacity=".50"/>
+              <stop offset=".46" stopColor="#ffffff" stopOpacity=".25"/>
+              <stop offset="1" stopColor="#dce5ec" stopOpacity=".30"/>
             </linearGradient>
             <linearGradient id="activePetalTint" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#ffffff" stopOpacity=".56"/>
-              <stop offset=".48" stopColor="#f8fcff" stopOpacity=".25"/>
-              <stop offset="1" stopColor="#dcebf5" stopOpacity=".24"/>
+              <stop offset="0" stopColor="#ffffff" stopOpacity=".75"/>
+              <stop offset=".48" stopColor="#f8fcff" stopOpacity=".45"/>
+              <stop offset="1" stopColor="#dcebf5" stopOpacity=".40"/>
             </linearGradient>
             <linearGradient id="dockTint" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#ffffff" stopOpacity=".34"/>
-              <stop offset="1" stopColor="#e7edf2" stopOpacity=".22"/>
+              <stop offset="0" stopColor="#ffffff" stopOpacity=".50"/>
+              <stop offset="1" stopColor="#e7edf2" stopOpacity=".35"/>
             </linearGradient>
             <linearGradient id="hubRing" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stopColor="#ffffff"/>
@@ -545,7 +545,7 @@ export default function Navbar({ currentPath, onNavigate }) {
       <nav
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="desktop-nav-dock hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-white/70 backdrop-blur-dock border border-black/5 rounded-full px-5 py-2.5 shadow-2xl items-center gap-3.5 max-w-3xl h-[78px] overflow-visible"
+        className="desktop-nav-dock hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-white/90 backdrop-blur-dock border border-black/5 rounded-full px-5 py-2.5 shadow-2xl items-center gap-3.5 max-w-3xl h-[78px] overflow-visible"
       >
         <div className="flex items-center gap-3.5 pr-3 border-r border-black/10 h-full overflow-visible">
           {navItems.map((item) => {

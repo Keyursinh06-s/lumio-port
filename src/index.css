@@ -145,8 +145,8 @@
 
 /* Custom utilities */
 .backdrop-blur-dock {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
 }
 
 /* Custom scroll reveal initial states */
@@ -714,6 +714,11 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background:
+      linear-gradient(to top, rgba(240, 244, 248, .35) 0%, rgba(242, 246, 250, .20) 42%, rgba(255, 255, 255, 0) 76%),
+      rgba(9, 11, 15, 0.12);
     transition: opacity .28s ease;
   }
 
@@ -747,22 +752,22 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     width: 100%;
     height: 100%;
     background:
-      radial-gradient(58% 48% at 32% 9%, rgba(255, 255, 255, .92), rgba(255, 255, 255, 0) 72%),
-      linear-gradient(145deg, rgba(255, 255, 255, .79) 0%, rgba(251, 253, 255, .59) 48%, rgba(231, 237, 242, .47) 100%);
-    -webkit-backdrop-filter: blur(28px) saturate(1.22) brightness(1.04);
-    backdrop-filter: blur(28px) saturate(1.22) brightness(1.04);
+      radial-gradient(58% 48% at 32% 9%, rgba(255, 255, 255, .96), rgba(255, 255, 255, 0) 72%),
+      linear-gradient(145deg, rgba(255, 255, 255, .88) 0%, rgba(251, 253, 255, .72) 48%, rgba(231, 237, 242, .62) 100%);
+    -webkit-backdrop-filter: blur(40px) saturate(1.22) brightness(1.04);
+    backdrop-filter: blur(40px) saturate(1.22) brightness(1.04);
   }
   .glass-surface.active {
     background:
       radial-gradient(66% 54% at 48% 4%, rgba(255, 255, 255, .99), rgba(255, 255, 255, 0) 72%),
-      linear-gradient(160deg, rgba(255, 255, 255, .92), rgba(248, 252, 255, .73) 54%, rgba(226, 237, 246, .57));
+      linear-gradient(160deg, rgba(255, 255, 255, .96), rgba(248, 252, 255, .82) 54%, rgba(226, 237, 246, .72));
   }
   .dock-glass {
     border-radius: 45px;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, .74), rgba(241, 245, 248, .54));
-    -webkit-backdrop-filter: blur(30px) saturate(1.18) brightness(1.04);
-    backdrop-filter: blur(30px) saturate(1.18) brightness(1.04);
+      linear-gradient(180deg, rgba(255, 255, 255, .88), rgba(241, 245, 248, .74));
+    -webkit-backdrop-filter: blur(45px) saturate(1.18) brightness(1.04);
+    backdrop-filter: blur(45px) saturate(1.18) brightness(1.04);
   }
 
   .petal {
