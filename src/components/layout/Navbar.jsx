@@ -432,12 +432,12 @@ function DockIcon({ mouseX, onClick, label, children }) {
 
           {/* Bottom dock */}
           <g transform="translate(7 16)">
-            <foreignObject className="glass-fo" x="25" y="407" width="783" height="89">
+            <foreignObject className="glass-fo" x="25" y="380" width="783" height="116">
               <div xmlns="http://www.w3.org/1999/xhtml" className="dock-glass"></div>
             </foreignObject>
-            <rect className="dock-tint" x="25" y="407" width="783" height="89" rx="44.5"/>
-            <rect className="dock-stroke" x="25" y="407" width="783" height="89" rx="44.5"/>
-            <path className="dock-highlight" d="M69 409H764C782 409 796 418 803 432"/>
+            <rect className="dock-tint" x="25" y="380" width="783" height="116" rx="58"/>
+            <rect className="dock-stroke" x="25" y="380" width="783" height="116" rx="58"/>
+            <path className="dock-highlight" d="M69 382H764C782 382 796 391 803 405"/>
 
             <g 
               className="dock-action" 
@@ -445,7 +445,7 @@ function DockIcon({ mouseX, onClick, label, children }) {
               role="link" 
               data-route="#home" 
               aria-label="Home" 
-              transform="translate(132 437)"
+              transform="translate(132 420)"
               onClick={() => handleNavClick('#home')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -465,7 +465,7 @@ function DockIcon({ mouseX, onClick, label, children }) {
               role="link" 
               data-route="#chat" 
               aria-label="Chat" 
-              transform="translate(605 437)"
+              transform="translate(605 420)"
               onClick={() => handleNavClick('#chat')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -491,20 +491,20 @@ function DockIcon({ mouseX, onClick, label, children }) {
               onPointerUp={handlePointerUp}
               onPointerCancel={handlePointerCancel}
             >
-              <circle className="hub-shadow-disc" cx="416" cy="426" r="61"/>
-              <circle className="hub-outer" cx="416" cy="416" r="64"/>
-              <circle className="hub-mid-ring" cx="416" cy="416" r="57"/>
-              <circle className="hub-core" cx="416" cy="416" r="47.5"/>
-              <path className="hub-core-highlight" d="M389 392A38 38 0 0 1 418 378"/>
-              <circle className="lumio-focus-ring" cx="416" cy="416" r="70"/>
+              <circle className="hub-shadow-disc" cx="416" cy="399" r="61"/>
+              <circle className="hub-outer" cx="416" cy="389" r="64"/>
+              <circle className="hub-mid-ring" cx="416" cy="389" r="57"/>
+              <circle className="hub-core" cx="416" cy="389" r="47.5"/>
+              <path className="hub-core-highlight" d="M389 365A38 38 0 0 1 418 351"/>
+              <circle className="lumio-focus-ring" cx="416" cy="389" r="70"/>
               <g className="hamburger">
-                <line x1="398" y1="402" x2="434" y2="402"/>
-                <line x1="398" y1="416" x2="434" y2="416"/>
-                <line x1="398" y1="430" x2="434" y2="430"/>
+                <line x1="398" y1="375" x2="434" y2="375"/>
+                <line x1="398" y1="389" x2="434" y2="389"/>
+                <line x1="398" y1="403" x2="434" y2="403"/>
               </g>
               <g className="closemark">
-                <line x1="400" y1="400" x2="432" y2="432"/>
-                <line x1="432" y1="400" x2="400" y2="432"/>
+                <line x1="400" y1="373" x2="432" y2="405"/>
+                <line x1="432" y1="373" x2="400" y2="405"/>
               </g>
             </g>
           </g>

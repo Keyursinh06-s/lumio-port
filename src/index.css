@@ -770,7 +770,7 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     visibility: hidden;
     pointer-events: none;
     transform-box: view-box;
-    transform-origin: 416px 416px;
+    transform-origin: 416px 389px;
     transform: translateY(42px) scale(.045) rotate(var(--fold));
     transition:
       transform .64s var(--lumio-spring),
@@ -834,7 +834,7 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
   }
   .petal:active {
     transform-box: view-box;
-    transform-origin: 416px 416px;
+    transform-origin: 416px 389px;
   }
   .lumio-fan-nav[data-open="true"] .petal:active {
     transform: scale(.984);
@@ -930,7 +930,7 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     cursor: pointer;
     outline: none;
     transform-box: view-box;
-    transform-origin: 416px 416px;
+    transform-origin: 416px 389px;
     transition: transform .18s var(--lumio-soft-spring);
   }
   .hub:hover,
