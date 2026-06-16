@@ -764,10 +764,9 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
   }
   .dock-glass {
     border-radius: 45px;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, .88), rgba(241, 245, 248, .74));
-    -webkit-backdrop-filter: blur(45px) saturate(1.18) brightness(1.04);
-    backdrop-filter: blur(45px) saturate(1.18) brightness(1.04);
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2) brightness(1.02);
+    backdrop-filter: blur(20px) saturate(1.2) brightness(1.02);
   }
 
   .petal {
@@ -795,7 +794,7 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateY(0) scale(1) rotate(0deg);
+    transform: translateY(-28px) scale(1) rotate(0deg);
     transition-delay: var(--open-delay), var(--open-delay), 0s;
   }
   .lumio-fan-nav[data-open="false"] .petal {
@@ -842,7 +841,7 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     transform-origin: 416px 389px;
   }
   .lumio-fan-nav[data-open="true"] .petal:active {
-    transform: scale(.984);
+    transform: translateY(-28px) scale(.984);
   }
 
   .petal-content {

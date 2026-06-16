@@ -491,20 +491,20 @@ function DockIcon({ mouseX, onClick, label, children }) {
               onPointerUp={handlePointerUp}
               onPointerCancel={handlePointerCancel}
             >
-              <circle className="hub-shadow-disc" cx="416" cy="399" r="61"/>
-              <circle className="hub-outer" cx="416" cy="389" r="64"/>
-              <circle className="hub-mid-ring" cx="416" cy="389" r="57"/>
-              <circle className="hub-core" cx="416" cy="389" r="47.5"/>
-              <path className="hub-core-highlight" d="M389 365A38 38 0 0 1 418 351"/>
-              <circle className="lumio-focus-ring" cx="416" cy="389" r="70"/>
+              <circle className="hub-shadow-disc" cx="416" cy="399" r="71"/>
+              <circle className="hub-outer" cx="416" cy="389" r="74"/>
+              <circle className="hub-mid-ring" cx="416" cy="389" r="66"/>
+              <circle className="hub-core" cx="416" cy="389" r="56"/>
+              <path className="hub-core-highlight" d="M384 361A45 45 0 0 1 418 344"/>
+              <circle className="lumio-focus-ring" cx="416" cy="389" r="80"/>
               <g className="hamburger">
-                <line x1="398" y1="375" x2="434" y2="375"/>
-                <line x1="398" y1="389" x2="434" y2="389"/>
-                <line x1="398" y1="403" x2="434" y2="403"/>
+                <line x1="394" y1="371" x2="438" y2="371"/>
+                <line x1="394" y1="389" x2="438" y2="389"/>
+                <line x1="394" y1="407" x2="438" y2="407"/>
               </g>
               <g className="closemark">
-                <line x1="400" y1="373" x2="432" y2="405"/>
-                <line x1="432" y1="373" x2="400" y2="405"/>
+                <line x1="396" y1="369" x2="436" y2="409"/>
+                <line x1="436" y1="369" x2="396" y2="409"/>
               </g>
             </g>
           </g>
