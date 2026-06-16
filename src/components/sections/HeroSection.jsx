@@ -93,7 +93,7 @@ export default function HeroSection() {
         {/* Top Status & Social Row */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-row items-center gap-2.5 sm:gap-4 bg-white/40 backdrop-blur-sm px-3.5 py-2 sm:px-6 sm:py-3 rounded-full border border-black/5 shadow-sm mb-3 sm:mb-8 w-auto max-w-[95vw] sm:max-w-none"
+          className="flex flex-row items-center gap-2.5 sm:gap-4 bg-white/40 backdrop-blur-sm px-3.5 py-2 sm:px-6 sm:py-3 rounded-full border border-black/5 shadow-sm mb-10 sm:mb-16 w-auto max-w-[95vw] sm:max-w-none"
         >
           {/* Avatar & Name */}
           <div className="flex items-center gap-2.5">
@@ -140,39 +140,42 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Rating Badge */}
-        <motion.div
-          variants={itemVariants}
-          className="flex items-center gap-2 bg-white px-4 py-1.5 rounded-full border border-brand-border-gray/20 shadow-sm mb-6 sm:mb-6"
-        >
-          <div className="flex gap-0.5 text-black">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="w-3.5 h-3.5 fill-black stroke-black" />
-            ))}
-          </div>
-          <span className="text-xs font-bold text-brand-black">100+ Satisfied Customers</span>
-        </motion.div>
+        {/* Hero Copy Content Group */}
+        <div className="w-full flex flex-col items-center">
+          {/* Rating Badge */}
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-2 bg-white px-4 py-1.5 rounded-full border border-brand-border-gray/20 shadow-sm mb-5 sm:mb-6"
+          >
+            <div className="flex gap-0.5 text-black">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="w-3.5 h-3.5 fill-black stroke-black" />
+              ))}
+            </div>
+            <span className="text-xs font-bold text-brand-black">100+ Satisfied Customers</span>
+          </motion.div>
 
-        {/* Headline */}
-        <motion.h1
-          variants={itemVariants}
-          className="text-4xl sm:text-6xl md:text-[64px] font-medium text-brand-black tracking-tight mb-3 sm:mb-6 max-w-3xl font-heading"
-          style={{ lineHeight: '0.9em' }}
-        >
-          I craft websites that hustle as hard as you do
-        </motion.h1>
+          {/* Headline */}
+          <motion.h1
+            variants={itemVariants}
+            className="text-4xl sm:text-6xl md:text-[64px] font-medium text-brand-black tracking-tight mb-4 sm:mb-6 max-w-3xl font-heading"
+            style={{ lineHeight: '0.9em' }}
+          >
+            I craft websites that hustle as hard as you do
+          </motion.h1>
 
-        {/* Subtext */}
-        <motion.p
-          variants={itemVariants}
-          className="text-base text-[#707070] max-w-2xl mb-3 sm:mb-8 font-normal font-body"
-          style={{ lineHeight: '22px' }}
-        >
-          I design innovative solutions that captivate audiences, and every interaction inspires action.
-        </motion.p>
+          {/* Subtext */}
+          <motion.p
+            variants={itemVariants}
+            className="text-base text-[#707070] max-w-2xl mb-8 sm:mb-10 font-normal font-body"
+            style={{ lineHeight: '22px' }}
+          >
+            I design innovative solutions that captivate audiences, and every interaction inspires action.
+          </motion.p>
+        </div>
 
         {/* CTA Button — Premium with label morph */}
-        <motion.div variants={itemVariants} className="mb-3 sm:mb-16">
+        <motion.div variants={itemVariants} className="mb-8 sm:mb-16">
           <Magnetic range={45}>
             <PremiumButton onClick={handlePlansClick} hoverText="View Plans & Pricing" />
           </Magnetic>
@@ -184,7 +187,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-full overflow-hidden relative mt-0 sm:mt-4"
+        className="w-full max-w-full overflow-hidden relative mt-8 sm:mt-12"
         style={{ perspective: '1200px' }}
       >
         <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
