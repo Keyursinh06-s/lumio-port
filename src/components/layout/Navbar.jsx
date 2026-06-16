@@ -439,42 +439,50 @@ function DockIcon({ mouseX, onClick, label, children }) {
             <rect className="dock-stroke" x="25" y="380" width="783" height="116" rx="58"/>
             <path className="dock-highlight" d="M69 382H764C782 382 796 391 803 405"/>
 
-            <g 
-              className="dock-action" 
-              tabIndex={0} 
-              role="link" 
-              data-route="#home" 
-              aria-label="Home" 
-              transform="translate(132 420)"
-              onClick={() => handleNavClick('#home')}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleNavClick('#home');
-                }
-              }}
-            >
-              <path d="M1 18 17 3l16 15"/>
-              <path d="M5 16v20h24V16"/>
-              <path d="M13 36V24h8v12"/>
+            {/* Home Action */}
+            <g transform="translate(132 420)">
+              <g 
+                className="dock-action" 
+                tabIndex={0} 
+                role="link" 
+                data-route="#home" 
+                aria-label="Home" 
+                aria-current={activeSection === 'home' ? 'page' : undefined}
+                onClick={() => handleNavClick('#home')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleNavClick('#home');
+                  }
+                }}
+              >
+                <path d="M1 18 17 3l16 15"/>
+                <path d="M5 16v20h24V16"/>
+                <path d="M13 36V24h8v12"/>
+                <circle className="dock-dot" cx="17" cy="48" r="4.5" />
+              </g>
             </g>
 
-            <g 
-              className="dock-action" 
-              tabIndex={0} 
-              role="link" 
-              data-route="#chat" 
-              aria-label="Chat" 
-              transform="translate(605 420)"
-              onClick={() => handleNavClick('#chat')}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleNavClick('#chat');
-                }
-              }}
-            >
-              <path d="M1 1h34v26H15L3 37V27H1V1Z"/>
+            {/* Chat Action */}
+            <g transform="translate(605 420)">
+              <g 
+                className="dock-action" 
+                tabIndex={0} 
+                role="link" 
+                data-route="#chat" 
+                aria-label="Chat" 
+                aria-current={activeSection === 'contact' ? 'page' : undefined}
+                onClick={() => handleNavClick('#chat')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleNavClick('#chat');
+                  }
+                }}
+              >
+                <path d="M1 1h34v26H15L3 37V27H1V1Z"/>
+                <circle className="dock-dot" cx="18" cy="48" r="4.5" />
+              </g>
             </g>
 
             {/* Premium hub */}

@@ -889,6 +889,12 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     opacity: .90;
     filter: url(#activeGlow);
   }
+  .petal[aria-current="page"] .petal-label {
+    font-weight: 800;
+  }
+  .petal[aria-current="page"] .petal-icon {
+    stroke-width: 4.2;
+  }
 
   .dock-tint {
     fill: url(#dockTint);
@@ -923,6 +929,9 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     color: #171b20;
     transform: translateY(-3px) scale(1.04);
   }
+  .dock-action[aria-current="page"] {
+    color: #171b20;
+  }
   .dock-action path,
   .dock-action rect,
   .dock-action line,
@@ -932,6 +941,25 @@ nav.fixed.bottom-6 button:not(.morph-btn):hover {
     stroke-width: 3.45;
     stroke-linecap: round;
     stroke-linejoin: round;
+    transition: stroke-width .22s var(--lumio-spring);
+  }
+  .dock-action[aria-current="page"] path,
+  .dock-action[aria-current="page"] rect,
+  .dock-action[aria-current="page"] line,
+  .dock-action[aria-current="page"] polyline {
+    stroke-width: 4.85;
+  }
+  .dock-dot {
+    fill: currentColor;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: translateY(2px) scale(.25);
+    transition: opacity .18s ease, transform .24s var(--lumio-spring);
+  }
+  .dock-action[aria-current="page"] .dock-dot {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
   }
 
   .hub {
