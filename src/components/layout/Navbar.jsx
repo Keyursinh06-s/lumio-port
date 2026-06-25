@@ -7,29 +7,79 @@ import { Home, Layers, Briefcase, MessageSquare, Zap, ShieldQuestion, BookOpen, 
 /* ===================================================
    DESKTOP DOCK ICON — completely unchanged
 =================================================== */
-function DockIcon({ mouseX, onClick, label, children }) {
-  const ref = useRef(null);
-  const distance = useTransform(mouseX, (val) => {
-    if (!ref.current) return 9999;
-    const bounds = ref.current.getBoundingClientRect();
-    return val - (bounds.left + bounds.width / 2);
-  });
-  const rawScale = useTransform(distance, [-100, 0, 100], [1, 1.45, 1], { clamp: true });
-  const scale = useSpring(rawScale, { stiffness: 220, damping: 24, mass: 0.1 });
+/* ===================================================
+   DESKTOP DOCK ICON / NAV ITEM — premium sliding pill
+   =================================================== */
+function NavItem({ id, icon: Icon, label, isActive, isTarget, hoveredId, onClick, onHoverStart, onHoverEnd }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Determine icon text color class
+  let textClass = 'text-black/40 hover:text-black';
+  if (isTarget) {
+    if (hoveredId === null) {
+      textClass = 'text-white';
+    } else {
+      textClass = 'text-black';
+    }
+  } else if (isActive) {
+    textClass = 'text-black font-semibold';
+  }
 
   return (
-    <motion.button
-      ref={ref}
+    <button
       onClick={onClick}
-      style={{ scale, transformOrigin: 'center bottom' }}
-      className="p-1.5 sm:p-3 rounded-full bg-transparent border-0 outline-none hover:bg-black/5 text-black/60 hover:text-black transition-colors duration-200 relative group flex items-center justify-center origin-bottom"
+      onMouseEnter={() => {
+        setIsHovered(true);
+        onHoverStart();
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        onHoverEnd();
+      }}
+      className="p-3 rounded-full bg-transparent border-0 outline-none relative flex items-center justify-center transition-colors duration-300"
+      style={{ WebkitTapHighlightColor: 'transparent' }}
       aria-label={label}
     >
-      {children}
-      <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-        {label}
+      {/* Sliding background pill */}
+      {isTarget && (
+        <motion.div
+          layoutId="navbar-pill"
+          className={`absolute inset-0 rounded-full -z-10 ${hoveredId === null ? 'bg-brand-black' : 'bg-black/[0.05]'}`}
+          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+        />
+      )}
+
+      {/* Icon */}
+      <span className={`relative z-10 transition-colors duration-300 flex flex-col items-center justify-center ${textClass}`}>
+        <Icon className="w-[20px] h-[20px]" />
+        
+        {/* Subtle active dot underneath when the active item doesn't have the pill */}
+        {isActive && !isTarget && (
+          <motion.span
+            layoutId="active-dot"
+            className="absolute bottom-0 w-1 h-1 bg-brand-black rounded-full"
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+          />
+        )}
       </span>
-    </motion.button>
+
+      {/* Premium Spring Tooltip */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.span
+            initial={{ opacity: 0, y: 10, scale: 0.85, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, scale: 1, x: '-50%' }}
+            exit={{ opacity: 0, y: 6, scale: 0.9, x: '-50%' }}
+            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+            className="absolute -top-12 left-1/2 bg-brand-black text-white text-[11px] font-semibold px-3 py-1.5 rounded-xl shadow-lg pointer-events-none whitespace-nowrap z-50 border border-white/10"
+          >
+            {label}
+            {/* Tooltip arrow */}
+            <span className="absolute bottom-[-3px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-brand-black rotate-45 border-r border-b border-white/10" />
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </button>
   );
 }function MobileFanNav({ currentPath, onNavigate }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -527,7 +577,45 @@ function DockIcon({ mouseX, onClick, label, children }) {
    Desktop dock (md+) | Mobile SVG fan (<md)
 =================================================== */
 export default function Navbar({ currentPath, onNavigate }) {
-  const mouseX = useMotionValue(Infinity);
+  const [hoveredId, setHoveredId] = useState(null);
+  const [activeSection, setActiveSection] = useState('hero');
+
+  // Observer to track section scroll visibility for both desktop and mobile
+  useEffect(() => {
+    const sectionIds = ['hero', 'services', 'projects', 'testimonials', 'process', 'pricing', 'faq', 'contact'];
+    const observerOptions = {
+      root: null,
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: 0,
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const desktopActiveSection = useMemo(() => {
+    if (['hero', 'services', 'projects', 'testimonials', 'process', 'faq'].includes(activeSection)) {
+      return activeSection;
+    }
+    if (activeSection === 'pricing') return 'process';
+    if (activeSection === 'contact' || activeSection === 'faq') return 'faq';
+    return 'hero';
+  }, [activeSection]);
+
+  const activeTargetId = hoveredId !== null ? hoveredId : desktopActiveSection;
 
   const navItems = [
     { id: 'hero', icon: Home, label: 'Home' },
@@ -549,24 +637,28 @@ export default function Navbar({ currentPath, onNavigate }) {
 
   return (
     <>
-      {/* Desktop/Tablet Floating Dock Navbar — UNCHANGED */}
+      {/* Desktop/Tablet Floating Dock Navbar */}
       <nav
-        onMouseMove={(e) => mouseX.set(e.clientX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
+        onMouseLeave={() => setHoveredId(null)}
         className="desktop-nav-dock hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-white/90 backdrop-blur-dock border border-black/5 rounded-full px-5 py-2.5 shadow-2xl items-center gap-3.5 max-w-3xl h-[78px] overflow-visible"
       >
         <div className="flex items-center gap-3.5 pr-3 border-r border-black/10 h-full overflow-visible">
           {navItems.map((item) => {
-            const Icon = item.icon;
+            const isActive = desktopActiveSection === item.id;
+            const isTarget = item.id === activeTargetId;
             return (
-              <Magnetic key={item.id} range={28}>
-                <DockIcon
-                  mouseX={mouseX}
-                  onClick={() => handleNavClick(item.id)}
+              <Magnetic key={item.id} range={18}>
+                <NavItem
+                  id={item.id}
+                  icon={item.icon}
                   label={item.label}
-                >
-                  <Icon className="w-[22px] h-[22px]" />
-                </DockIcon>
+                  isActive={isActive}
+                  isTarget={isTarget}
+                  hoveredId={hoveredId}
+                  onClick={() => handleNavClick(item.id)}
+                  onHoverStart={() => setHoveredId(item.id)}
+                  onHoverEnd={() => setHoveredId(null)}
+                />
               </Magnetic>
             );
           })}
