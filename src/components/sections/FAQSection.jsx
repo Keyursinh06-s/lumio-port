@@ -38,11 +38,7 @@ const faqs = [
 ];
 
 export default function FAQSection() {
-  // We initialize the first two as open to match the exact visual representation in the screenshots
-  const [openItems, setOpenItems] = useState({
-    process: true,
-    revisions: true,
-  });
+  const [openItems, setOpenItems] = useState({});
 
   const handleToggle = (id) => {
     setOpenItems((prev) => ({

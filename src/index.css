@@ -524,30 +524,30 @@
 .card-horizontal.card-1 {
   z-index: 3;
   transition-delay: 0.04s;
-  transform: translateX(-50%) rotate(0deg) translateY(86px);
+  transform: translateX(-50%) rotate(0deg) translateY(56px);
 }
 .card-horizontal.card-2 {
   z-index: 2;
   transition-delay: 0s;
-  transform: translateX(-50%) rotate(6deg) translateY(86px);
+  transform: translateX(-50%) rotate(4deg) translateY(50px);
 }
 .card-horizontal.card-3 {
   z-index: 1;
   transition-delay: 0.02s;
-  transform: translateX(-50%) rotate(-6deg) translateY(86px);
+  transform: translateX(-50%) rotate(-4deg) translateY(56px);
 }
 
 /* Horizontal open (fan) positions - tighter layout to avoid blank space */
 .folder-root.open .card-horizontal.card-1 {
-  transform: translateX(calc(-50% + 46px)) rotate(14deg) translateY(56px);
+  transform: translateX(calc(-50% + 56px)) rotate(18deg) translateY(12px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 12px 24px rgba(0,0,0,0.25);
 }
 .folder-root.open .card-horizontal.card-2 {
-  transform: translateX(-50%) rotate(0deg) translateY(36px);
+  transform: translateX(-50%) rotate(0deg) translateY(-8px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.4), 0 16px 32px rgba(0,0,0,0.3);
 }
 .folder-root.open .card-horizontal.card-3 {
-  transform: translateX(calc(-50% - 46px)) rotate(-14deg) translateY(56px);
+  transform: translateX(calc(-50% - 56px)) rotate(-18deg) translateY(12px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 12px 24px rgba(0,0,0,0.25);
 }
 
@@ -561,30 +561,30 @@
 .card-vertical.card-1 {
   z-index: 2; /* right behind center */
   transition-delay: 0.04s;
-  transform: translateX(-50%) rotate(0deg) translateY(112px);
+  transform: translateX(-50%) rotate(0deg) translateY(72px);
 }
 .card-vertical.card-2 {
   z-index: 3; /* center on top */
   transition-delay: 0s;
-  transform: translateX(-50%) rotate(4deg) translateY(112px);
+  transform: translateX(-50%) rotate(4deg) translateY(66px);
 }
 .card-vertical.card-3 {
   z-index: 1; /* left behind center */
   transition-delay: 0.02s;
-  transform: translateX(-50%) rotate(-4deg) translateY(112px);
+  transform: translateX(-50%) rotate(-4deg) translateY(72px);
 }
 
 /* Vertical open (fan) positions - tighter layout to avoid blank space */
 .folder-root.open .card-vertical.card-1 {
-  transform: translateX(calc(-50% + 32px)) rotate(12deg) translateY(48px);
+  transform: translateX(calc(-50% + 40px)) rotate(15deg) translateY(20px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 12px 24px rgba(0,0,0,0.25);
 }
 .folder-root.open .card-vertical.card-2 {
-  transform: translateX(-50%) rotate(0deg) translateY(28px);
+  transform: translateX(-50%) rotate(0deg) translateY(4px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.4), 0 16px 32px rgba(0,0,0,0.3);
 }
 .folder-root.open .card-vertical.card-3 {
-  transform: translateX(calc(-50% - 32px)) rotate(-12deg) translateY(48px);
+  transform: translateX(calc(-50% - 40px)) rotate(-15deg) translateY(20px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.35), 0 12px 24px rgba(0,0,0,0.25);
 }
 
