@@ -153,6 +153,7 @@ export default function CustomCursor() {
         border: '1.5px solid transparent',
         backdropFilter: 'blur(12px) saturate(180%)',
         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.25)',
+        mixBlendMode: 'normal',
       };
     }
 
@@ -168,6 +169,7 @@ export default function CustomCursor() {
         border: '1.5px solid transparent',
         backdropFilter: 'blur(12px) saturate(180%)',
         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.25)',
+        mixBlendMode: 'normal',
       };
     }
 
@@ -178,8 +180,9 @@ export default function CustomCursor() {
         height: '32px',
         borderRadius: '50%',
         backgroundColor: 'transparent',
-        border: '1.5px solid #000000',
+        border: '1.5px solid #ffffff',
         boxShadow: 'none',
+        mixBlendMode: 'difference',
       };
     }
 
@@ -189,9 +192,10 @@ export default function CustomCursor() {
       width: '16px',
       height: '16px',
       borderRadius: '50%',
-      backgroundColor: '#000000',
+      backgroundColor: '#ffffff',
       border: '1.5px solid transparent',
       boxShadow: 'none',
+      mixBlendMode: 'difference',
     };
   };
 
@@ -203,11 +207,12 @@ export default function CustomCursor() {
       width: '5px',
       height: '5px',
       borderRadius: '50%',
-      backgroundColor: '#000000',
+      backgroundColor: '#ffffff',
       pointerEvents: 'none',
       willChange: 'transform',
       zIndex: 100000,
       transition: 'opacity 0.2s ease',
+      mixBlendMode: 'difference',
     };
 
     if (cursorType === 'hover-project' || cursorType === 'hover-folder') {
