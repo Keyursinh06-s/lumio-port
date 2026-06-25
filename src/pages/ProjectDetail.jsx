@@ -114,6 +114,9 @@ export default function ProjectDetail({ projectId, onNavigate, onProjectClick })
         {/* Project Hero Mockup */}
         <motion.div
           variants={itemVariants}
+          layoutId={`project-hero-${projectId}`}
+          layout
+          transition={{ layout: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
           className="w-full bg-gradient-to-b from-[#1c1c1e] to-[#0f0f10] rounded-[32px] overflow-hidden p-6 sm:p-12 mb-8 shadow-md aspect-[16/10] flex items-center justify-center"
         >
           <img

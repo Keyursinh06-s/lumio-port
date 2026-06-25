@@ -10,7 +10,7 @@ import NewsletterSection from '../components/sections/NewsletterSection';
 import FAQSection from '../components/sections/FAQSection';
 import ContactSection from '../components/sections/ContactSection';
 
-export default function Home({ onProjectClick }) {
+export default function Home({ onProjectClick, activeProjectId }) {
   return (
     <div className="w-full flex flex-col items-center">
       {/* Sections stacking */}
@@ -18,7 +18,7 @@ export default function Home({ onProjectClick }) {
       
       <ServicesSection />
       
-      <ProjectsSection onProjectClick={onProjectClick} />
+      <ProjectsSection onProjectClick={onProjectClick} activeProjectId={activeProjectId} />
       
       <TestimonialsSection />
       

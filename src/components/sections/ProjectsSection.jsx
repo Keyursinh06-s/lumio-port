@@ -48,7 +48,7 @@ const projects = [
 
 import { useRef } from 'react';
 
-export default function ProjectsSection({ onProjectClick }) {
+export default function ProjectsSection({ onProjectClick, activeProjectId }) {
   const headerVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -120,6 +120,7 @@ export default function ProjectsSection({ onProjectClick }) {
               variants={cardVariants}
               onClick={() => onProjectClick(project.id)}
               data-cursor="project"
+              layoutId={`project-hero-${project.id}`}
               className={`w-full aspect-[16/10] sm:aspect-[16/9.5] rounded-[32px] overflow-hidden relative group cursor-pointer shadow-md ${project.bgClass}`}
             >
               {/* Project Image Wrapper (Laptop) */}

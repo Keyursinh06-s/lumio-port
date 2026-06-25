@@ -15,6 +15,10 @@ export default function CustomCursor() {
     lastLabelRef.current = labelText;
   }
 
+  // Track pressed state without re-renders
+  const isPressedRef = useRef(false);
+  const currentScaleRef = useRef(1);
+
   useEffect(() => {
     if (isMobile) return;
 
@@ -30,11 +34,16 @@ export default function CustomCursor() {
       cx = lerp(cx, mx, 0.14);
       cy = lerp(cy, my, 0.14);
 
+      // Smoothly animate scale towards target (0.85 when pressed, 1.0 when released)
+      const targetScale = isPressedRef.current ? 0.85 : 1;
+      currentScaleRef.current = lerp(currentScaleRef.current, targetScale, 0.18);
+      const s = currentScaleRef.current;
+
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(calc(${cx}px - 50%), calc(${cy}px - 50%))`;
+        cursorRef.current.style.transform = `translate(calc(${cx}px - 50%), calc(${cy}px - 50%)) scale(${s})`;
       }
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%))`;
+        dotRef.current.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%)) scale(${s})`;
       }
 
       rafId = requestAnimationFrame(animate);
@@ -66,8 +75,17 @@ export default function CustomCursor() {
       }
     };
 
+    const handleMouseDown = () => {
+      isPressedRef.current = true;
+    };
+
+    const handleMouseUp = () => {
+      isPressedRef.current = false;
+    };
+
     const handleMouseLeaveWindow = () => {
       setIsVisible(false);
+      isPressedRef.current = false;
     };
 
     const handleMouseEnterWindow = () => {
@@ -76,6 +94,8 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseover', handleHover);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mouseleave', handleMouseLeaveWindow);
     document.addEventListener('mouseenter', handleMouseEnterWindow);
 
@@ -83,6 +103,8 @@ export default function CustomCursor() {
       cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleHover);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseleave', handleMouseLeaveWindow);
       document.removeEventListener('mouseenter', handleMouseEnterWindow);
     };

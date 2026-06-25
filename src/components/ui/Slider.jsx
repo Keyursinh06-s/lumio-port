@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 
 const testimonials = [
@@ -28,7 +28,7 @@ const testimonials = [
     name: 'Michael Thompson',
     role: 'Co-Founder, FitPro Gear',
     image: 'https://framerusercontent.com/images/fyfIz5kF0SZptIxKsUwkCMV6uZo.jpg',
-    text: '"Working with Keyursinh was an absolute game-changer. The website design is not just visually stunning but also strategically built to drive results. Our customer experience has improved dramatically, and we’ve seen a noticeable boost in sales!"',
+    text: '"Working with Keyursinh was an absolute game-changer. The website design is not just visually stunning but also strategically built to drive results. Our customer experience has improved dramatically, and we\'ve seen a noticeable boost in sales!"',
     rating: 5,
   },
   {
@@ -40,41 +40,110 @@ const testimonials = [
   },
 ];
 
+const AUTOPLAY_INTERVAL = 6000;
+const SWIPE_THRESHOLD = 50;
+
 export default function Slider() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+  const [direction, setDirection] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const dragStartX = useRef(0);
+  const containerRef = useRef(null);
 
-  const handlePrev = () => {
-    setDirection(-1);
-    setIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  // Autoplay progress (0 → 1)
+  const progress = useMotionValue(0);
+  const progressWidth = useTransform(progress, [0, 1], ['0%', '100%']);
+
+  const goTo = useCallback((newIndex, dir) => {
+    setDirection(dir);
+    setIndex(newIndex);
+    progress.set(0);
+  }, [progress]);
+
+  const handlePrev = useCallback(() => {
+    goTo(index === 0 ? testimonials.length - 1 : index - 1, -1);
+  }, [index, goTo]);
+
+  const handleNext = useCallback(() => {
+    goTo(index === testimonials.length - 1 ? 0 : index + 1, 1);
+  }, [index, goTo]);
+
+  // Autoplay with animated progress bar
+  useEffect(() => {
+    if (isPaused) return;
+
+    progress.set(0);
+    const controls = animate(progress, 1, {
+      duration: AUTOPLAY_INTERVAL / 1000,
+      ease: 'linear',
+      onComplete: () => {
+        handleNext();
+      }
+    });
+
+    return () => controls.stop();
+  }, [index, isPaused, handleNext, progress]);
+
+  // Swipe/drag handlers
+  const handlePointerDown = (e) => {
+    dragStartX.current = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
   };
 
-  const handleNext = () => {
-    setDirection(1);
-    setIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  const handlePointerUp = (e) => {
+    const endX = e.clientX || (e.changedTouches && e.changedTouches[0]?.clientX) || 0;
+    const diff = endX - dragStartX.current;
+
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+      if (diff < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
   };
 
   const slideVariants = {
     enter: (dir) => ({
-      x: dir > 0 ? 100 : -100,
+      x: dir > 0 ? 60 : -60,
       opacity: 0,
+      filter: 'blur(4px)',
     }),
     center: {
       x: 0,
       opacity: 1,
+      filter: 'blur(0px)',
     },
     exit: (dir) => ({
-      x: dir < 0 ? 100 : -100,
+      x: dir < 0 ? 60 : -60,
       opacity: 0,
+      filter: 'blur(4px)',
+      position: 'absolute',
     }),
   };
 
   const current = testimonials[index];
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-brand-white border border-brand-border-gray/30 rounded-[32px] px-6 py-8 sm:px-10 sm:py-10 shadow-sm relative overflow-hidden flex flex-col items-center">
+    <div
+      ref={containerRef}
+      className="w-full max-w-2xl mx-auto bg-brand-white border border-brand-border-gray/30 rounded-[32px] px-6 py-8 sm:px-10 sm:py-10 shadow-sm relative overflow-hidden flex flex-col items-center select-none"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={(e) => { setIsPaused(true); handlePointerDown(e); }}
+      onTouchEnd={(e) => { setIsPaused(false); handlePointerUp(e); }}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+    >
+      {/* Autoplay Progress Bar */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-brand-border-gray/20">
+        <motion.div
+          className="h-full bg-brand-black/40 rounded-full"
+          style={{ width: progressWidth }}
+        />
+      </div>
+
       <div className="w-full min-h-[300px] sm:min-h-[260px] relative">
-        <AnimatePresence initial={false} custom={direction} mode="wait">
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
             key={index}
             custom={direction}
@@ -82,7 +151,11 @@ export default function Slider() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 0.45,
+              ease: [0.22, 1, 0.36, 1],
+              filter: { duration: 0.3 }
+            }}
             className="w-full flex flex-col items-start text-left"
           >
             {/* Header info */}
@@ -93,6 +166,7 @@ export default function Slider() {
                 className="w-14 h-14 rounded-full object-cover border border-black/5"
                 loading="lazy"
                 decoding="async"
+                draggable={false}
               />
               <div>
                 <h4 className="font-semibold text-base sm:text-lg text-brand-black">
@@ -119,8 +193,8 @@ export default function Slider() {
         </AnimatePresence>
       </div>
 
-      {/* Navigation arrows */}
-      <div className="flex items-center gap-4 mt-6">
+      {/* Navigation: arrows + dots */}
+      <div className="flex items-center gap-5 mt-6">
         <button
           onClick={handlePrev}
           className="w-10 h-10 rounded-full bg-brand-black text-white hover:bg-brand-black/90 active:scale-95 transition-all flex items-center justify-center shadow-md"
@@ -128,6 +202,27 @@ export default function Slider() {
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
+
+        {/* Dot pagination */}
+        <div className="flex items-center gap-2">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i, i > index ? 1 : -1)}
+              className="group p-1"
+              aria-label={`Go to testimonial ${i + 1}`}
+            >
+              <div
+                className={`rounded-full transition-all duration-300 ${
+                  i === index
+                    ? 'w-6 h-2 bg-brand-black'
+                    : 'w-2 h-2 bg-brand-border-gray/50 group-hover:bg-brand-black/40'
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+
         <button
           onClick={handleNext}
           className="w-10 h-10 rounded-full bg-brand-black text-white hover:bg-brand-black/90 active:scale-95 transition-all flex items-center justify-center shadow-md"

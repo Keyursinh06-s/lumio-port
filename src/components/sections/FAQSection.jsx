@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Accordion from '../ui/Accordion';
 import PremiumButton from '../ui/PremiumButton';
+import VelocityScrollItem from '../ui/VelocityScrollItem';
 
 const faqs = [
   {
@@ -101,6 +102,7 @@ export default function FAQSection() {
       </motion.div>
 
       {/* FAQ Accordions List */}
+      <VelocityScrollItem>
       <motion.div
         variants={listVariants}
         initial="hidden"
@@ -119,6 +121,7 @@ export default function FAQSection() {
           </motion.div>
         ))}
       </motion.div>
+      </VelocityScrollItem>
 
       {/* CTA Box */}
       <motion.div

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 import PremiumButton from '../ui/PremiumButton';
+import VelocityScrollItem from '../ui/VelocityScrollItem';
 
 const plans = {
   standard: {
@@ -99,6 +100,7 @@ export default function PricingSection() {
       </div>
 
       {/* Plan Card */}
+      <VelocityScrollItem>
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -159,6 +161,7 @@ export default function PricingSection() {
           </motion.div>
         </AnimatePresence>
       </motion.div>
+      </VelocityScrollItem>
     </section>
   );
 }

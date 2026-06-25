@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Lumio — Premium Fan Navigation</title>
+<style>
+  :root{
+    --lumio-ink:#090b0f;
+    --lumio-muted:#858c96;
+    --lumio-nav-width:min(88vw,846px);
+    --lumio-bottom:calc(10px + env(safe-area-inset-bottom));
+    --lumio-spring:cubic-bezier(.18,.92,.24,1.12);
+    --lumio-soft-spring:cubic-bezier(.2,.82,.2,1);
+  }
+
+  *{box-sizing:border-box}
+  html,body{width:100%;min-height:100%;margin:0}
+  body{
+    overflow-x:hidden;
+    color:var(--lumio-ink);
+    font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(78% 48% at 8% 22%,rgba(203,219,235,.58),transparent 69%),
+      radial-gradient(64% 48% at 91% 78%,rgba(239,220,210,.55),transparent 72%),
+      linear-gradient(145deg,#fafbfc 0%,#eff3f6 54%,#fafafa 100%);
+  }
+
+  /* Soft ambient detail only so the glass can be previewed in this standalone file. */
+  body::before,
+  body::after{
+    content:"";
+    position:fixed;
+    z-index:-1;
+    border-radius:38px;
+    opacity:.23;
+    filter:blur(8px);
+    pointer-events:none;
+  }
+  body::before{
+    width:min(54vw,460px);
+    height:170px;
+    left:7vw;
+    bottom:13vh;
+    background:linear-gradient(135deg,rgba(95,130,158,.36),rgba(235,240,244,.2));
+    transform:rotate(-5deg);
+  }
+  body::after{
+    width:min(38vw,330px);
+    height:210px;
+    right:4vw;
+    bottom:16vh;
+    background:linear-gradient(145deg,rgba(146,112,97,.26),rgba(245,240,237,.18));
+    transform:rotate(7deg);
+  }
+
+  .lumio-scrim{
+    position:fixed;
+    inset:0;
+    z-index:9998;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    background:
+      linear-gradient(to top,rgba(245,248,250,.30) 0%,rgba(247,249,251,.12) 42%,rgba(255,255,255,0) 76%);
+    transition:opacity .28s ease,visibility 0s linear .28s;
+  }
+  .lumio-scrim[data-visible="true"]{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transition:opacity .28s ease;
+  }
+
+  .lumio-fan-nav{
+    position:fixed;
+    left:50%;
+    bottom:var(--lumio-bottom);
+    z-index:9999;
+    width:var(--lumio-nav-width);
+    transform:translate3d(-50%,0,0);
+    user-select:none;
+    -webkit-user-select:none;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+    isolation:isolate;
+  }
+  .lumio-fan-nav svg{
+    display:block;
+    width:100%;
+    height:auto;
+    overflow:visible;
+  }
+
+  /* Real glass layers. They sit inside clipped foreignObjects, so the page
+     behind each individual petal is blurred instead of globally blurring the page. */
+  .glass-fo{pointer-events:none;overflow:visible}
+  .glass-surface{
+    width:100%;
+    height:100%;
+    background:
+      radial-gradient(58% 48% at 32% 9%,rgba(255,255,255,.92),rgba(255,255,255,0) 72%),
+      linear-gradient(145deg,rgba(255,255,255,.79) 0%,rgba(251,253,255,.59) 48%,rgba(231,237,242,.47) 100%);
+    -webkit-backdrop-filter:blur(28px) saturate(1.22) brightness(1.04);
+    backdrop-filter:blur(28px) saturate(1.22) brightness(1.04);
+  }
+  .glass-surface.active{
+    background:
+      radial-gradient(66% 54% at 48% 4%,rgba(255,255,255,.99),rgba(255,255,255,0) 72%),
+      linear-gradient(160deg,rgba(255,255,255,.92),rgba(248,252,255,.73) 54%,rgba(226,237,246,.57));
+  }
+  .dock-glass{
+    border-radius:45px;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.74),rgba(241,245,248,.54));
+    -webkit-backdrop-filter:blur(30px) saturate(1.18) brightness(1.04);
+    backdrop-filter:blur(30px) saturate(1.18) brightness(1.04);
+  }
+
+  .petal{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform-box:view-box;
+    transform-origin:416px 416px;
+    transform:translateY(42px) scale(.045) rotate(var(--fold));
+    transition:
+      transform .64s var(--lumio-spring),
+      opacity .20s ease,
+      visibility 0s linear .64s;
+    cursor:pointer;
+    outline:none;
+    will-change:transform,opacity;
+  }
+  .petal.work{--fold:0deg;--open-delay:0ms;--close-delay:72ms}
+  .petal.about{--fold:28deg;--open-delay:34ms;--close-delay:34ms}
+  .petal.services{--fold:-28deg;--open-delay:34ms;--close-delay:34ms}
+  .petal.blog{--fold:58deg;--open-delay:72ms;--close-delay:0ms}
+  .petal.contact{--fold:-58deg;--open-delay:72ms;--close-delay:0ms}
+
+  .lumio-fan-nav[data-open="true"] .petal{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transform:translateY(0) scale(1) rotate(0deg);
+    transition-delay:var(--open-delay),var(--open-delay),0s;
+  }
+  .lumio-fan-nav[data-open="false"] .petal{
+    transition-delay:var(--close-delay),0ms,.64s;
+  }
+
+  .petal-hit{fill:#fff;fill-opacity:.001;pointer-events:all}
+  .petal-tint{
+    fill:url(#petalTint);
+    opacity:.66;
+    transition:opacity .2s ease,filter .2s ease;
+    pointer-events:none;
+  }
+  .petal-stroke{
+    fill:none;
+    stroke:rgba(255,255,255,.96);
+    stroke-width:1.45;
+    filter:url(#petalShadow);
+    transition:filter .2s ease,stroke .2s ease;
+    pointer-events:none;
+  }
+  .petal-highlight{
+    fill:none;
+    stroke:rgba(255,255,255,.67);
+    stroke-width:.78;
+    opacity:.74;
+    pointer-events:none;
+  }
+  .petal:hover .petal-stroke,
+  .petal:focus-visible .petal-stroke{
+    filter:url(#petalShadowHover);
+    stroke:rgba(255,255,255,1);
+  }
+  .petal:hover .petal-tint,
+  .petal:focus-visible .petal-tint{opacity:.82}
+  .petal:active{transform-box:view-box;transform-origin:416px 416px}
+  .lumio-fan-nav[data-open="true"] .petal:active{transform:scale(.984)}
+
+  .petal-content{
+    transition:transform .22s var(--lumio-soft-spring);
+    pointer-events:none;
+  }
+  .petal:hover .petal-content,
+  .petal:focus-visible .petal-content{transform:translateY(-3px)}
+
+  .petal-icon{
+    fill:none;
+    stroke:var(--lumio-ink);
+    stroke-width:3.05;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .petal-label{
+    fill:var(--lumio-ink);
+    font-size:21px;
+    font-weight:700;
+    letter-spacing:-.52px;
+    font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    text-rendering:geometricPrecision;
+  }
+  .petal-dot{
+    fill:var(--lumio-ink);
+    opacity:0;
+    transform-box:fill-box;
+    transform-origin:center;
+    transform:scale(.25);
+    transition:opacity .18s ease,transform .24s var(--lumio-spring);
+  }
+  .petal[aria-current="page"] .petal-dot{
+    opacity:1;
+    transform:scale(1);
+  }
+  .petal[aria-current="page"] .petal-tint{
+    fill:url(#activePetalTint);
+    opacity:.90;
+    filter:url(#activeGlow);
+  }
+
+  .dock-tint{
+    fill:url(#dockTint);
+    opacity:.46;
+    pointer-events:none;
+  }
+  .dock-stroke{
+    fill:none;
+    stroke:rgba(255,255,255,.96);
+    stroke-width:1.35;
+    filter:url(#dockShadow);
+    pointer-events:none;
+  }
+  .dock-highlight{
+    fill:none;
+    stroke:rgba(255,255,255,.72);
+    stroke-width:.72;
+    opacity:.72;
+    pointer-events:none;
+  }
+
+  .dock-action{
+    cursor:pointer;
+    color:#8b929b;
+    outline:none;
+    transition:color .18s ease,transform .22s var(--lumio-soft-spring);
+    transform-box:fill-box;
+    transform-origin:center;
+  }
+  .dock-action:hover,
+  .dock-action:focus-visible{
+    color:#171b20;
+    transform:translateY(-3px) scale(1.04);
+  }
+  .dock-action path,
+  .dock-action rect,
+  .dock-action line,
+  .dock-action polyline{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:3.45;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .hub{
+    cursor:pointer;
+    outline:none;
+    transform-box:view-box;
+    transform-origin:416px 416px;
+    transition:transform .18s var(--lumio-soft-spring);
+  }
+  .hub:hover,
+  .hub:focus-visible{transform:scale(1.035)}
+  .hub:active{transform:scale(.965)}
+  .hub-shadow-disc{fill:rgba(74,85,97,.16);filter:url(#hubAmbientShadow)}
+  .hub-outer{
+    fill:url(#hubRing);
+    stroke:rgba(255,255,255,.98);
+    stroke-width:1.4;
+    filter:url(#hubRingShadow);
+  }
+  .hub-mid-ring{
+    fill:none;
+    stroke:rgba(210,219,226,.88);
+    stroke-width:1.25;
+  }
+  .hub-core{
+    fill:url(#hubCore);
+    stroke:rgba(255,255,255,.18);
+    stroke-width:1;
+    filter:url(#hubCoreShadow);
+  }
+  .hub-core-highlight{
+    fill:none;
+    stroke:rgba(255,255,255,.20);
+    stroke-width:1.15;
+    stroke-linecap:round;
+  }
+  .hamburger,
+  .closemark{
+    fill:none;
+    stroke:#fff;
+    stroke-width:4;
+    stroke-linecap:round;
+    transform-box:fill-box;
+    transform-origin:center;
+    transition:opacity .20s ease,transform .42s var(--lumio-spring);
+  }
+  .hamburger{opacity:1;transform:scale(1) rotate(0deg)}
+  .closemark{opacity:0;transform:scale(.52) rotate(-62deg)}
+  .lumio-fan-nav[data-open="true"] .hamburger{opacity:0;transform:scale(.52) rotate(62deg)}
+  .lumio-fan-nav[data-open="true"] .closemark{opacity:1;transform:scale(1) rotate(0deg)}
+
+  .lumio-focus-ring{
+    fill:none;
+    stroke:#11151a;
+    stroke-width:2.2;
+    stroke-dasharray:5 6;
+    opacity:0;
+    pointer-events:none;
+  }
+  .hub:focus-visible .lumio-focus-ring{opacity:.7}
+
+  @media (max-width:360px){
+    :root{--lumio-nav-width:min(94vw,846px);--lumio-bottom:calc(5px + env(safe-area-inset-bottom))}
+  }
+  @media (min-width:1100px){
+    :root{--lumio-nav-width:846px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="lumio-scrim" id="lumioScrim" aria-hidden="true"></div>
+
+<nav class="lumio-fan-nav" id="lumioFanNav" data-open="false" aria-label="Primary mobile navigation">
+  <svg viewBox="0 0 846 517" role="img" aria-labelledby="lumioNavTitle lumioNavDesc">
+    <title id="lumioNavTitle">Expandable premium glass fan navigation</title>
+    <desc id="lumioNavDesc">A bottom glass dock that opens into five fan-shaped navigation items.</desc>
+
+    <defs>
+      <!-- Exact clips for true per-panel backdrop blur. -->
+      <clipPath id="clipBlog"><path d="M342 399H62C28 399 3 384 1 354C-2 316 18 269 55 243C83 222 112 220 140 237L359 365C380 378 368 399 342 399Z"/></clipPath>
+      <clipPath id="clipAbout"><path d="M367 366L132 222C105 205 108 169 119 139C134 99 171 73 211 70C246 67 274 84 289 116L390 334C398 351 385 367 367 366Z"/></clipPath>
+      <clipPath id="clipWork"><path d="M389 341L314 90C304 57 324 25 356 13C391 0 440 0 476 13C508 25 528 57 518 90L443 341C440 351 434 357 423 357H409C398 357 392 351 389 341Z"/></clipPath>
+      <clipPath id="clipServices"><path d="M465 366L700 222C727 205 724 169 713 139C698 99 661 73 621 70C586 67 558 84 543 116L442 334C434 351 447 367 465 366Z"/></clipPath>
+      <clipPath id="clipContact"><path d="M490 399H770C804 399 829 384 831 354C834 316 814 269 777 243C749 222 720 220 692 237L473 365C452 378 464 399 490 399Z"/></clipPath>
+
+      <linearGradient id="petalTint" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffffff" stop-opacity=".30"/>
+        <stop offset=".46" stop-color="#ffffff" stop-opacity=".12"/>
+        <stop offset="1" stop-color="#dce5ec" stop-opacity=".16"/>
+      </linearGradient>
+      <linearGradient id="activePetalTint" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffffff" stop-opacity=".56"/>
+        <stop offset=".48" stop-color="#f8fcff" stop-opacity=".25"/>
+        <stop offset="1" stop-color="#dcebf5" stop-opacity=".24"/>
+      </linearGradient>
+      <linearGradient id="dockTint" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffffff" stop-opacity=".34"/>
+        <stop offset="1" stop-color="#e7edf2" stop-opacity=".22"/>
+      </linearGradient>
+      <linearGradient id="hubRing" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffffff"/>
+        <stop offset=".55" stop-color="#f4f7f9"/>
+        <stop offset="1" stop-color="#dfe6eb"/>
+      </linearGradient>
+      <radialGradient id="hubCore" cx="34%" cy="25%" r="82%">
+        <stop offset="0" stop-color="#20252c"/>
+        <stop offset=".48" stop-color="#101318"/>
+        <stop offset="1" stop-color="#050609"/>
+      </radialGradient>
+
+      <filter id="petalShadow" x="-28%" y="-28%" width="156%" height="184%">
+        <feDropShadow dx="0" dy="13" stdDeviation="15" flood-color="#5f6b77" flood-opacity=".17"/>
+        <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#ffffff" flood-opacity=".84"/>
+      </filter>
+      <filter id="petalShadowHover" x="-32%" y="-32%" width="164%" height="194%">
+        <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#48545f" flood-opacity=".23"/>
+        <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#ffffff" flood-opacity="1"/>
+      </filter>
+      <filter id="activeGlow" x="-34%" y="-34%" width="168%" height="196%">
+        <feDropShadow dx="0" dy="12" stdDeviation="17" flood-color="#b5d8ee" flood-opacity=".42"/>
+      </filter>
+      <filter id="dockShadow" x="-18%" y="-65%" width="136%" height="250%">
+        <feDropShadow dx="0" dy="14" stdDeviation="19" flood-color="#53606c" flood-opacity=".19"/>
+        <feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#ffffff" flood-opacity=".9"/>
+      </filter>
+      <filter id="hubAmbientShadow" x="-70%" y="-70%" width="240%" height="240%">
+        <feGaussianBlur stdDeviation="9"/>
+      </filter>
+      <filter id="hubRingShadow" x="-65%" y="-65%" width="230%" height="230%">
+        <feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#46515d" flood-opacity=".29"/>
+        <feDropShadow dx="0" dy="-1" stdDeviation="2" flood-color="#ffffff" flood-opacity=".75"/>
+      </filter>
+      <filter id="hubCoreShadow" x="-70%" y="-70%" width="240%" height="240%">
+        <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#000000" flood-opacity=".35"/>
+      </filter>
+    </defs>
+
+    <g aria-label="Fan menu" transform="translate(7 13) scale(1 1.04) translate(0 -13)">
+      <!-- Blog -->
+      <g class="petal blog" tabindex="0" role="link" data-route="#blog" aria-label="Blog">
+        <path class="petal-hit" d="M342 399H62C28 399 3 384 1 354C-2 316 18 269 55 243C83 222 112 220 140 237L359 365C380 378 368 399 342 399Z"/>
+        <foreignObject class="glass-fo" x="0" y="0" width="846" height="517" clip-path="url(#clipBlog)">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="glass-surface"></div>
+        </foreignObject>
+        <path class="petal-tint" d="M342 399H62C28 399 3 384 1 354C-2 316 18 269 55 243C83 222 112 220 140 237L359 365C380 378 368 399 342 399Z"/>
+        <path class="petal-stroke" d="M342 399H62C28 399 3 384 1 354C-2 316 18 269 55 243C83 222 112 220 140 237L359 365C380 378 368 399 342 399Z"/>
+        <path class="petal-highlight" d="M57 244C84 223 112 223 138 239L354 365"/>
+        <g class="petal-content">
+          <g class="petal-icon" transform="translate(87 284)">
+            <path d="M0 2c6-2 11-1 16 3v25c-5-4-10-5-16-3V2Z"/>
+            <path d="M32 2c-6-2-11-1-16 3v25c5-4 10-5 16-3V2Z"/>
+            <path d="M16 5v26"/>
+          </g>
+          <text class="petal-label" x="103" y="349" text-anchor="middle">Blog</text>
+          <circle class="petal-dot" cx="103" cy="370" r="5.2"/>
+        </g>
+      </g>
+
+      <!-- About -->
+      <g class="petal about" tabindex="0" role="link" data-route="#about" aria-label="About">
+        <path class="petal-hit" d="M367 366L132 222C105 205 108 169 119 139C134 99 171 73 211 70C246 67 274 84 289 116L390 334C398 351 385 367 367 366Z"/>
+        <foreignObject class="glass-fo" x="0" y="0" width="846" height="517" clip-path="url(#clipAbout)">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="glass-surface"></div>
+        </foreignObject>
+        <path class="petal-tint" d="M367 366L132 222C105 205 108 169 119 139C134 99 171 73 211 70C246 67 274 84 289 116L390 334C398 351 385 367 367 366Z"/>
+        <path class="petal-stroke" d="M367 366L132 222C105 205 108 169 119 139C134 99 171 73 211 70C246 67 274 84 289 116L390 334C398 351 385 367 367 366Z"/>
+        <path class="petal-highlight" d="M122 139C137 101 172 77 211 74C244 72 270 87 284 117"/>
+        <g class="petal-content">
+          <g class="petal-icon" transform="translate(205 140) scale(.86)">
+            <circle cx="14" cy="11" r="8.2"/>
+            <path d="M1 36c1-12 6-17 13-17s12 5 13 17"/>
+          </g>
+          <text class="petal-label" x="217" y="205" text-anchor="middle">About</text>
+          <circle class="petal-dot" cx="217" cy="226" r="5.2"/>
+        </g>
+      </g>
+
+      <!-- Work -->
+      <g class="petal work" tabindex="0" role="link" data-route="#work" aria-label="Work" aria-current="page">
+        <path class="petal-hit" d="M389 341L314 90C304 57 324 25 356 13C391 0 440 0 476 13C508 25 528 57 518 90L443 341C440 351 434 357 423 357H409C398 357 392 351 389 341Z"/>
+        <foreignObject class="glass-fo" x="0" y="0" width="846" height="517" clip-path="url(#clipWork)">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="glass-surface active"></div>
+        </foreignObject>
+        <path class="petal-tint" d="M389 341L314 90C304 57 324 25 356 13C391 0 440 0 476 13C508 25 528 57 518 90L443 341C440 351 434 357 423 357H409C398 357 392 351 389 341Z"/>
+        <path class="petal-stroke" d="M389 341L314 90C304 57 324 25 356 13C391 0 440 0 476 13C508 25 528 57 518 90L443 341C440 351 434 357 423 357H409C398 357 392 351 389 341Z"/>
+        <path class="petal-highlight" d="M318 89C309 59 328 30 358 18C391 6 439 6 473 18"/>
+        <g class="petal-content">
+          <g class="petal-icon" transform="translate(395 55) scale(1 .93)">
+            <rect x="0" y="0" width="17" height="17" rx="2.5"/>
+            <rect x="24" y="0" width="17" height="17" rx="2.5"/>
+            <rect x="0" y="24" width="17" height="17" rx="2.5"/>
+            <rect x="24" y="24" width="17" height="17" rx="2.5"/>
+          </g>
+          <text class="petal-label" x="416" y="134" text-anchor="middle">Work</text>
+          <circle class="petal-dot" cx="416" cy="156" r="5.6"/>
+        </g>
+      </g>
+
+      <!-- Services -->
+      <g class="petal services" tabindex="0" role="link" data-route="#services" aria-label="Services">
+        <path class="petal-hit" d="M465 366L700 222C727 205 724 169 713 139C698 99 661 73 621 70C586 67 558 84 543 116L442 334C434 351 447 367 465 366Z"/>
+        <foreignObject class="glass-fo" x="0" y="0" width="846" height="517" clip-path="url(#clipServices)">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="glass-surface"></div>
+        </foreignObject>
+        <path class="petal-tint" d="M465 366L700 222C727 205 724 169 713 139C698 99 661 73 621 70C586 67 558 84 543 116L442 334C434 351 447 367 465 366Z"/>
+        <path class="petal-stroke" d="M465 366L700 222C727 205 724 169 713 139C698 99 661 73 621 70C586 67 558 84 543 116L442 334C434 351 447 367 465 366Z"/>
+        <path class="petal-highlight" d="M548 117C562 87 588 72 621 74C660 77 695 101 710 139"/>
+        <g class="petal-content">
+          <g class="petal-icon" transform="translate(599 142) scale(.9)">
+            <path d="M0 8 15 0l15 8-15 8L0 8Z"/>
+            <path d="m0 18 15 8 15-8"/>
+            <path d="m0 27 15 8 15-8"/>
+          </g>
+          <text class="petal-label" x="612" y="205" text-anchor="middle">Services</text>
+          <circle class="petal-dot" cx="612" cy="226" r="5.2"/>
+        </g>
+      </g>
+
+      <!-- Contact -->
+      <g class="petal contact" tabindex="0" role="link" data-route="#contact" aria-label="Contact">
+        <path class="petal-hit" d="M490 399H770C804 399 829 384 831 354C834 316 814 269 777 243C749 222 720 220 692 237L473 365C452 378 464 399 490 399Z"/>
+        <foreignObject class="glass-fo" x="0" y="0" width="846" height="517" clip-path="url(#clipContact)">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="glass-surface"></div>
+        </foreignObject>
+        <path class="petal-tint" d="M490 399H770C804 399 829 384 831 354C834 316 814 269 777 243C749 222 720 220 692 237L473 365C452 378 464 399 490 399Z"/>
+        <path class="petal-stroke" d="M490 399H770C804 399 829 384 831 354C834 316 814 269 777 243C749 222 720 220 692 237L473 365C452 378 464 399 490 399Z"/>
+        <path class="petal-highlight" d="M475 365L694 239C720 223 748 223 775 244"/>
+        <g class="petal-content">
+          <g class="petal-icon" transform="translate(713 284) scale(.86)">
+            <path d="M0 13 35 0 23 35 15 20 0 13Z"/>
+            <path d="M15 20 35 0"/>
+          </g>
+          <text class="petal-label" x="728" y="349" text-anchor="middle">Contact</text>
+          <circle class="petal-dot" cx="728" cy="370" r="5.2"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom dock -->
+    <g transform="translate(7 16)">
+    <foreignObject class="glass-fo" x="25" y="407" width="783" height="89">
+      <div xmlns="http://www.w3.org/1999/xhtml" class="dock-glass"></div>
+    </foreignObject>
+    <rect class="dock-tint" x="25" y="407" width="783" height="89" rx="44.5"/>
+    <rect class="dock-stroke" x="25" y="407" width="783" height="89" rx="44.5"/>
+    <path class="dock-highlight" d="M69 409H764C782 409 796 418 803 432"/>
+
+    <g class="dock-action" tabindex="0" role="link" data-route="#home" aria-label="Home" transform="translate(132 437)">
+      <path d="M1 18 17 3l16 15"/>
+      <path d="M5 16v20h24V16"/>
+      <path d="M13 36V24h8v12"/>
+    </g>
+
+    <g class="dock-action" tabindex="0" role="link" data-route="#chat" aria-label="Chat" transform="translate(605 437)">
+      <path d="M1 1h34v26H15L3 37V27H1V1Z"/>
+    </g>
+
+    <!-- Premium hub -->
+    <g class="hub" id="lumioHub" tabindex="0" role="button" aria-label="Open navigation menu" aria-expanded="false">
+      <circle class="hub-shadow-disc" cx="416" cy="426" r="61"/>
+      <circle class="hub-outer" cx="416" cy="416" r="64"/>
+      <circle class="hub-mid-ring" cx="416" cy="416" r="57"/>
+      <circle class="hub-core" cx="416" cy="416" r="47.5"/>
+      <path class="hub-core-highlight" d="M389 392A38 38 0 0 1 418 378"/>
+      <circle class="lumio-focus-ring" cx="416" cy="416" r="70"/>
+      <g class="hamburger">
+        <line x1="398" y1="402" x2="434" y2="402"/>
+        <line x1="398" y1="416" x2="434" y2="416"/>
+        <line x1="398" y1="430" x2="434" y2="430"/>
+      </g>
+      <g class="closemark">
+        <line x1="400" y1="400" x2="432" y2="432"/>
+        <line x1="432" y1="400" x2="400" y2="432"/>
+      </g>
+    </g>
+    </g>
+  </svg>
+</nav>
+
+<script>
+(() => {
+  'use strict';
+
+  const nav = document.getElementById('lumioFanNav');
+  const hub = document.getElementById('lumioHub');
+  const scrim = document.getElementById('lumioScrim');
+  const petals = [...nav.querySelectorAll('.petal')];
+  const routeItems = [...nav.querySelectorAll('[data-route]')];
+
+  let isOpen = false;
+  let pointerStartY = null;
+  let ignoreNextHubClick = false;
+
+  const setOpen = (value, { focusActive = false } = {}) => {
+    isOpen = Boolean(value);
+    nav.dataset.open = String(isOpen);
+    scrim.dataset.visible = String(isOpen);
+    scrim.setAttribute('aria-hidden', String(!isOpen));
+    hub.setAttribute('aria-expanded', String(isOpen));
+    hub.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+
+    if (isOpen && focusActive) {
+      window.setTimeout(() => {
+        nav.querySelector('.petal[aria-current="page"]')?.focus({ preventScroll: true });
+      }, 360);
+    }
+  };
+
+  const toggle = () => setOpen(!isOpen);
+
+  const activate = (item) => {
+    if (item.classList.contains('petal')) {
+      petals.forEach((petal) => {
+        if (petal === item) petal.setAttribute('aria-current', 'page');
+        else petal.removeAttribute('aria-current');
+      });
+    }
+
+    const route = item.dataset.route;
+    const label = item.getAttribute('aria-label');
+
+    nav.dispatchEvent(new CustomEvent('lumio:navigate', {
+      bubbles: true,
+      detail: { route, label }
+    }));
+
+    if (route?.startsWith('#')) {
+      history.replaceState(null, '', route);
+      document.querySelector(route)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    if (item.classList.contains('petal')) {
+      window.setTimeout(() => setOpen(false), 120);
+    }
+  };
+
+  hub.addEventListener('click', () => {
+    if (ignoreNextHubClick) {
+      ignoreNextHubClick = false;
+      return;
+    }
+    toggle();
+  });
+
+  hub.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggle();
+    } else if (event.key === 'ArrowUp' && !isOpen) {
+      event.preventDefault();
+      setOpen(true, { focusActive: true });
+    } else if (event.key === 'ArrowDown' && isOpen) {
+      event.preventDefault();
+      setOpen(false);
+    }
+  });
+
+  scrim.addEventListener('click', () => setOpen(false));
+
+  routeItems.forEach((item) => {
+    item.addEventListener('click', () => activate(item));
+    item.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activate(item);
+      }
+    });
+  });
+
+  petals.forEach((petal, index) => {
+    petal.addEventListener('keydown', (event) => {
+      if (!isOpen) return;
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        petals[(index - 1 + petals.length) % petals.length].focus({ preventScroll: true });
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        petals[(index + 1) % petals.length].focus({ preventScroll: true });
+      } else if (event.key === 'ArrowDown' || event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false);
+        hub.focus({ preventScroll: true });
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isOpen) {
+      setOpen(false);
+      hub.focus({ preventScroll: true });
+    }
+  });
+
+  /* One-hand swipe: drag the hub upward to open and downward to close. */
+  hub.addEventListener('pointerdown', (event) => {
+    pointerStartY = event.clientY;
+    hub.setPointerCapture?.(event.pointerId);
+  });
+
+  hub.addEventListener('pointerup', (event) => {
+    if (pointerStartY == null) return;
+
+    const deltaY = event.clientY - pointerStartY;
+    pointerStartY = null;
+
+    if (Math.abs(deltaY) >= 24) {
+      ignoreNextHubClick = true;
+      if (deltaY < 0) setOpen(true);
+      else setOpen(false);
+    }
+  });
+
+  hub.addEventListener('pointercancel', () => {
+    pointerStartY = null;
+  });
+
+  /* Helpful for visual testing: append ?open=1 to the URL. */
+  if (new URLSearchParams(location.search).get('open') === '1') {
+    setOpen(true);
+  }
+})();
+</script>
+</body>
+</html>

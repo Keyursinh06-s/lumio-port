@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 export default function VelocityScrollItem({ children }) {
@@ -10,37 +10,65 @@ export default function VelocityScrollItem({ children }) {
     offset: ["start end", "end start"]
   });
   
-  // Clean, organic scale tied to scroll position (0.95 -> 1.0 -> 0.95)
+  // Scale: subtle breathe tied to scroll position (0.96 -> 1.0 -> 0.96)
   const rawScale = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    [0.95, 1, 0.95]
+    [0, 0.4, 0.6, 1],
+    [0.96, 1, 1, 0.96]
   );
   
-  // Smooth out the scale transition using spring physics
   const scale = useSpring(rawScale, {
-    damping: 25,
-    stiffness: 120,
-    mass: 0.2
+    damping: 30,
+    stiffness: 150,
+    mass: 0.15
   });
 
-  // Smooth opacity fade at viewport edges (0.7 -> 1.0 -> 0.7)
+  // Opacity: smooth fade at viewport edges
   const rawOpacity = useTransform(
     scrollYProgress,
-    [0, 0.25, 0.75, 1],
-    [0.7, 1, 1, 0.7]
+    [0, 0.2, 0.8, 1],
+    [0.4, 1, 1, 0.4]
   );
   
   const opacity = useSpring(rawOpacity, {
-    damping: 25,
-    stiffness: 120,
+    damping: 30,
+    stiffness: 150,
+    mass: 0.15
+  });
+
+  // Subtle Y parallax: elements drift slightly against scroll direction
+  const rawY = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [30, 0, -30]
+  );
+
+  const y = useSpring(rawY, {
+    damping: 35,
+    stiffness: 100,
     mass: 0.2
   });
+
+  // Edge blur: elements slightly blur at edges of viewport, crystal clear in center
+  const rawBlur = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.85, 1],
+    [2, 0, 0, 2]
+  );
+
+  const blur = useSpring(rawBlur, {
+    damping: 30,
+    stiffness: 150,
+    mass: 0.15
+  });
+
+  // Convert blur spring to CSS filter string
+  const filter = useTransform(blur, (v) => `blur(${v}px)`);
 
   return (
     <motion.div 
       ref={containerRef} 
-      style={{ scale, opacity, transformOrigin: "center center" }}
+      style={{ scale, opacity, y, filter, transformOrigin: "center center" }}
       className="w-full flex justify-center"
     >
       {children}

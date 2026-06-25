@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
 import CustomCursor from './components/ui/CustomCursor';
+import ScrollProgress from './components/ui/ScrollProgress';
 import useLenis from './hooks/useLenis';
 import './App.css';
 
@@ -89,38 +90,41 @@ export default function App() {
 
       {/* Premium Custom Cursor (Context-Aware) */}
       <CustomCursor />
+      <ScrollProgress />
 
       {/* 2. Main Page Render with Frosted Page Transitions */}
       <main className="w-full flex-grow overflow-visible">
-        <AnimatePresence mode="wait">
-          {currentPage === 'home' ? (
-            <motion.div
-              key="home-page"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              style={{ width: '100%' }}
-            >
-              <Home onProjectClick={handleProjectClick} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key={`detail-${activeProjectId}`}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              style={{ width: '100%' }}
-            >
-              <ProjectDetail 
-                projectId={activeProjectId} 
-                onNavigate={handleNavigate}
-                onProjectClick={handleProjectClick}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <LayoutGroup>
+          <AnimatePresence mode="wait">
+            {currentPage === 'home' ? (
+              <motion.div
+                key="home-page"
+                initial={{ opacity: 0, y: 25, scale: 0.99 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.99, filter: 'blur(4px)' }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                style={{ width: '100%' }}
+              >
+                <Home onProjectClick={handleProjectClick} activeProjectId={activeProjectId} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key={`detail-${activeProjectId}`}
+                initial={{ opacity: 0, y: 25, scale: 0.99 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.99, filter: 'blur(4px)' }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                style={{ width: '100%' }}
+              >
+                <ProjectDetail 
+                  projectId={activeProjectId} 
+                  onNavigate={handleNavigate}
+                  onProjectClick={handleProjectClick}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </LayoutGroup>
       </main>
 
       {/* 3. Floating Bottom Dock Navigation */}

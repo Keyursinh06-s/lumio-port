@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import VelocityScrollItem from '../ui/VelocityScrollItem';
 
 const tools = [
   {
@@ -95,6 +96,7 @@ export default function ToolkitSection() {
       </motion.div>
 
       {/* Progress Bars list */}
+      <VelocityScrollItem>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -152,6 +154,7 @@ export default function ToolkitSection() {
           </motion.div>
         ))}
       </motion.div>
+      </VelocityScrollItem>
     </section>
   );
 }

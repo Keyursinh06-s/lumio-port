@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import VelocityScrollItem from '../ui/VelocityScrollItem';
 
 
 
@@ -22,6 +23,7 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="w-full pt-8 pb-24 sm:pb-24 px-4 flex flex-col items-center justify-start text-center relative z-10">
+      <VelocityScrollItem>
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -87,6 +89,7 @@ export default function ContactSection() {
           </a>
         </div>
       </motion.div>
+      </VelocityScrollItem>
 
       {/* Footer Logo & Copyright */}
       <div className="flex flex-col items-center gap-2 mt-10">

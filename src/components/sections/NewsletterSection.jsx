@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import VelocityScrollItem from '../ui/VelocityScrollItem';
 
 // Extracted SVG paths for partner logos
 const partnerLogos = [
@@ -145,6 +146,7 @@ export default function NewsletterSection() {
 
   return (
     <section id="blog" className="w-full max-w-4xl mx-auto px-4 py-8 sm:py-16 flex flex-col items-center justify-start text-center relative z-10">
+      <VelocityScrollItem>
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -209,6 +211,7 @@ export default function NewsletterSection() {
           </div>
         </div>
       </motion.div>
+      </VelocityScrollItem>
     </section>
   );
 }
